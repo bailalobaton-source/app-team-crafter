@@ -35,18 +35,18 @@ export default function DescuentoParati() {
       <CardDescuento
         descuento={{
           id: 1,
-          monto: 20,
+          valor_descuento: 20,
           tipo_descuento: "porcentaje",
-          titulo:
+          titulo_descuento:
             language === "es"
               ? "20% en Primer Taller"
               : "20% off your First Workshop",
-          descripcion:
+          descripcion_descuento:
             language === "es"
               ? "Aprovecha un 20% de descuento en tu primer taller de scrapbooking. Ideal para quienes desean empezar a crear con nosotros."
               : "Get 20% off your first scrapbooking workshop. Perfect for those who want to start creating with us.",
           fecha_expiracion: "2024-11-15",
-          codigo: "PRIMERO20",
+          codigo_descuento: "PRIMERO20",
         }}
       />
     </section>
