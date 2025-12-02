@@ -51,7 +51,9 @@ export default function CardsPlanes() {
             <Button
               className={`text-xl font-semibold px-8 py-5 border-3 duration-500 transition-all ${"bg-[#fc68b9] text-[#ffee97] border-[#FFEE97] hover:bg-[#fc68b9] hover:border-[#FFEE97] hover:text-[#ffee97] shadow-rigth-yellow cursor-pointer"}`}
               radius="full"
-              type="submit"
+              onPress={() => {
+                router.push(`/planes/${plan.id}`);
+              }}
             >
               Suscríbete
             </Button>
