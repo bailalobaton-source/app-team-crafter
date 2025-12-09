@@ -60,7 +60,7 @@ export default function CardRecursos({ recurso, width }: Props) {
         <div className="w-full aspect-[1/1] object-cover">
           <Image
             className="h-full w-full object-cover group-hover:scale-105 duration-300"
-            src={`${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/doc/${recurso.img_recurso}`}
+            src={`${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/${recurso.img_recurso}`}
             alt={`${recurso.nombre_recurso}`}
             width={500}
             height={500}
@@ -71,7 +71,7 @@ export default function CardRecursos({ recurso, width }: Props) {
         {!isExpired && (
           <a
             className="group absolute cursor-pointer right-4 bottom-4 bg-white text-[#FC68B9] font-semibold flex items-center gap-3 p-1.5 px-4 rounded-full group-hover:bg-[#FC68B9] group-hover:text-white duration-300"
-            href={`${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/doc/${recurso?.link_recurso}`}
+            href={`${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/${recurso?.link_recurso}`}
             download
             onClick={getfindDescargas}
           >
