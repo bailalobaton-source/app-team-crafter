@@ -13,7 +13,7 @@ export default function RespuestaComentariosForo({ respuesta }: Props) {
         className="w-7 h-7 flex-shrink-0"
         src={
           respuesta.usuario?.foto_perfil
-            ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/img/${respuesta.usuario?.foto_perfil}`
+            ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/${respuesta.usuario?.foto_perfil}`
             : "/icons/user.svg"
         }
         alt={`Avatar de ${respuesta.usuario.nombre}`}

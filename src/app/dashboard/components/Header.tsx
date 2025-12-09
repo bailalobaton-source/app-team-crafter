@@ -305,7 +305,7 @@ export default function Header() {
                 className="h-[40px] w-[40px] border-2 border-[#68E1E0] rounded-full object-cover transition-all duration-200"
                 src={
                   perfil?.foto_perfil
-                    ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/img/${perfil.foto_perfil}`
+                    ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/${perfil.foto_perfil}`
                     : "/icons/user.svg"
                 }
                 alt="Avatar usuario"

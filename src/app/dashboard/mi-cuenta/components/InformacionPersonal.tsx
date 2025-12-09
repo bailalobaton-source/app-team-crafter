@@ -146,7 +146,7 @@ export default function InformacionPersonal() {
                 className="w-16 h-16 flex-shrink-0 max-sm:w-14 max-sm:h-14"
                 src={
                   perfil?.foto_perfil
-                    ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/img/${perfil.foto_perfil}`
+                    ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/${perfil.foto_perfil}`
                     : "/icons/user.svg"
                 }
                 alt={`Avatar de ${perfil?.nombre}`}

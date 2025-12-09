@@ -81,7 +81,7 @@ export default function ComentarioItem({ comentario }: Props) {
           className="w-10 h-10 flex-shrink-0"
           src={
             comentario.usuario?.foto_perfil
-              ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/img/${comentario.usuario?.foto_perfil}`
+              ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/${comentario.usuario?.foto_perfil}`
               : "/icons/user.svg"
           }
           alt={`Avatar de ${comentario.usuario.nombre}`}

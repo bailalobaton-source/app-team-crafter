@@ -96,7 +96,7 @@ export default function ModalForoSelect({
                   className="w-8 h-8 flex-shrink-0"
                   src={
                     selectForo.usuario?.foto_perfil
-                      ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/img/${selectForo.usuario?.foto_perfil}`
+                      ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/${selectForo.usuario?.foto_perfil}`
                       : "/icons/user.svg"
                   }
                   alt={`Avatar de ${selectForo.usuario.nombre}`}
@@ -114,7 +114,7 @@ export default function ModalForoSelect({
 
             {selectForo.img_foro && (
               <Image
-                src={`${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/img/${selectForo.img_foro}`}
+                src={`${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/${selectForo.img_foro}`}
                 alt={`Imagen del foro ${selectForo.titulo_foro}`}
                 width={600}
                 height={300}
@@ -174,7 +174,7 @@ export default function ModalForoSelect({
                 className="w-8 h-8 flex-shrink-0"
                 src={
                   selectForo.usuario?.foto_perfil
-                    ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/img/${selectForo.usuario?.foto_perfil}`
+                    ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/${selectForo.usuario?.foto_perfil}`
                     : "/icons/user.svg"
                 }
                 alt={`Avatar de ${selectForo.usuario.nombre}`}

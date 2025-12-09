@@ -66,7 +66,7 @@ export default function CardForo({
               className="w-8 h-8 flex-shrink-0"
               src={
                 foro.usuario?.foto_perfil
-                  ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/img/${foro.usuario?.foto_perfil}`
+                  ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/${foro.usuario?.foto_perfil}`
                   : "/icons/user.svg"
               }
               alt={`Avatar de ${foro.usuario.nombre}`}
@@ -84,7 +84,7 @@ export default function CardForo({
 
         {foro.img_foro && (
           <Image
-            src={`${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/img/${foro.img_foro}`}
+            src={`${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/${foro.img_foro}`}
             alt={`Imagen del foro ${foro.titulo_foro}`}
             width={600}
             height={300}

@@ -102,7 +102,7 @@ export default function ComentarClase({
         className="w-10 h-10 rounded-full"
         src={
           perfil?.foto_perfil
-            ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/img/${perfil.foto_perfil}`
+            ? `${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/${perfil.foto_perfil}`
             : "/icons/user.svg"
         }
       />

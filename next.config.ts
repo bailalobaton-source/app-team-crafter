@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
       "end-point.team-crafter.com",
       "localhost",
       "www.paypalobjects.com",
+      "server-image-team-crafter-production.up.railway.app",
     ],
   },
 };
