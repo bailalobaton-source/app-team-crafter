@@ -11,7 +11,7 @@ export default function SuscripcionVencida() {
     <>
       <Image
         className="w-screen h-screen absolute top-0 object-cover object-top"
-        src={"/inicio1.PNG"}
+        src="/inicio1.png"
         alt="cuenta suspendida"
         width={200}
         height={200}
