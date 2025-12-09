@@ -73,20 +73,24 @@ export default function DashboardLayout({
 
   return (
     <div className="w-screen h-screen flex flex-col">
-      {!suscripcion && <SuscripcionVencida />}
-
-      <Header />
-      <VideoPresentacion
-        onOpenChange={onOpenChange}
-        isOpen={!hasWatchedVideo}
-      />
-      <div className="h-full w-full flex overflow-hidden">
-        <Menu />
-        <div className="flex flex-col w-full h-full overflow-y-auto">
-          {children}
-          <Footer />
-        </div>
-      </div>
+      {!suscripcion ? (
+        <SuscripcionVencida />
+      ) : (
+        <>
+          <Header />
+          <VideoPresentacion
+            onOpenChange={onOpenChange}
+            isOpen={!hasWatchedVideo}
+          />
+          <div className="h-full w-full flex overflow-hidden">
+            <Menu />
+            <div className="flex flex-col w-full h-full overflow-y-auto">
+              {children}
+              <Footer />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
