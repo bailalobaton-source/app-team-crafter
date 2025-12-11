@@ -14,7 +14,9 @@ export interface Clase {
   image_clase: string;
   video_clase: string;
   titulo_clase: string;
+  titulo_clase_en: string;
   descripcion_clase: string;
+  descripcion_clase_en: string;
   nro_reproducciones: number;
   nro_likes: number;
   categoria_clase: string;

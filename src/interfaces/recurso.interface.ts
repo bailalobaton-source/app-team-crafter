@@ -14,6 +14,7 @@ export interface Recurso {
   id: number;
   clase_id: string;
   nombre_recurso: string;
+  nombre_recurso_en: string;
   link_recurso: string;
   img_recurso: string;
   fecha_caducidad: string;

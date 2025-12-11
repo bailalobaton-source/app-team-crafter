@@ -5,6 +5,7 @@ import Link from "next/link";
 import VideoPlayer from "./VideoPlayer";
 import { useState } from "react";
 import useFavoritosStore from "@/stores/favoritos.store";
+import { useLanguageStore } from "@/stores/useLanguage.store";
 
 interface Props {
   clase: Clase;
@@ -14,6 +15,8 @@ interface Props {
 }
 
 export default function CardClases({ clase, width }: Props) {
+  const { language } = useLanguageStore();
+
   const { isFavorito, toggleFavorito } = useFavoritosStore();
   const [isLoadingFavorito, setIsLoadingFavorito] = useState(false);
 
@@ -57,7 +60,11 @@ export default function CardClases({ clase, width }: Props) {
             <Image
               className="w-6"
               src={"/icons/clock.svg"}
-              alt={`reproducir ${clase.descripcion_clase}`}
+              alt={`reproducir ${
+                language === "es"
+                  ? clase.descripcion_clase
+                  : clase.descripcion_clase_en
+              }`}
               width={100}
               height={100}
             />
@@ -103,7 +110,7 @@ export default function CardClases({ clase, width }: Props) {
       </div>
 
       <h3 className=" text-medium   font-semibold text-[#8A8A8A] uppercase">
-        {clase.titulo_clase}
+        {language === "es" ? clase.titulo_clase : clase.titulo_clase_en}
       </h3>
     </article>
   );

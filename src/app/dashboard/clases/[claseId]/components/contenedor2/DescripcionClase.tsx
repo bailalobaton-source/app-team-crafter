@@ -30,11 +30,13 @@ export default function DescripcionClase({ clase }: Props) {
       <h2 className="text-lg text-[#68E1E0] font-semibold">{t.description}</h2>
 
       <p
-        className={`font-light transition-all duration-300 ${
+        className={`font-light text- transition-all duration-300  whitespace-pre-line ${
           expanded ? "line-clamp-none" : "line-clamp-4"
         }`}
       >
-        {clase.descripcion_clase}
+        {language === "es"
+          ? clase.descripcion_clase
+          : clase.descripcion_clase_en}
       </p>
 
       <button

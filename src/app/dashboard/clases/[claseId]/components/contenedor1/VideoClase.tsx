@@ -3,6 +3,7 @@ import { Clase } from "@/interfaces/clase.interface";
 import { getViewClase } from "@/services/clases.service";
 import useFavoritosStore from "@/stores/favoritos.store";
 import useLikedClasesStore from "@/stores/likeClases.store";
+import { useLanguageStore } from "@/stores/useLanguage.store";
 
 import { formatDate } from "@/utils/formatDate";
 import Image from "next/image";
@@ -16,6 +17,8 @@ interface Props {
 }
 
 export default function VideoClase({ clase }: Props) {
+  const { language } = useLanguageStore();
+
   const { isLiked, toggleLike } = useLikedClasesStore();
 
   const { isFavorito, toggleFavorito } = useFavoritosStore();
@@ -140,7 +143,7 @@ export default function VideoClase({ clase }: Props) {
       {/* Título */}
       <article className="w-full flex justify-between gap-8 mt-1">
         <h1 className="text-xl text-[#8A8A8A] font-bold max-md:text-lg">
-          {clase.titulo_clase}
+          {language === "es" ? clase.titulo_clase : clase.titulo_clase_en}
         </h1>
         <button
           className=" duration-300 rounded-lg cursor-pointer mr-2"

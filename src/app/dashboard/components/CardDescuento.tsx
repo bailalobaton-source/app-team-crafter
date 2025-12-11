@@ -1,6 +1,8 @@
 "use client";
 import { Snippet } from "@heroui/react";
 import { useLanguageStore } from "@/stores/useLanguage.store";
+import { formatDate } from "@/utils/formatDate";
+import { Descuento } from "@/interfaces/descuentos.interface";
 
 export const CopyIcon = () => {
   return (
@@ -58,16 +60,6 @@ export const CopyIcon = () => {
   );
 };
 
-export interface Descuento {
-  id: number;
-  valor_descuento: number;
-  tipo_descuento: string;
-  titulo_descuento: string;
-  descripcion_descuento: string;
-  fecha_expiracion: string;
-  codigo_descuento: string;
-}
-
 interface Props {
   descuento: Descuento;
 }
@@ -91,6 +83,8 @@ export default function CardDescuento({ descuento }: Props) {
     },
   }[language];
 
+  console.log(language);
+
   return (
     <article className="w-full relative flex overflow-hidden max-sm:flex-col">
       <span className="absolute -top-[18px] -right-[18px] w-[36px] h-[36px] rounded-full bg-white z-10" />
@@ -103,7 +97,7 @@ export default function CardDescuento({ descuento }: Props) {
         <span className="absolute -top-[18px] -right-[18px] w-[36px] h-[36px] rounded-full bg-white" />
         <span className="absolute -bottom-[18px] -left-[18px] w-[36px] h-[36px] rounded-full bg-white" />
         <span className="absolute -bottom-[18px] -right-[18px] w-[36px] h-[36px] rounded-full bg-white" />
-        <h3 className="text-5xl font-bold">
+        <h3 className="text-4xl font-bold">
           {descuento.tipo_descuento === "efectivo"
             ? `$ ${descuento.valor_descuento}`
             : `${descuento.valor_descuento}%`}
@@ -119,10 +113,18 @@ export default function CardDescuento({ descuento }: Props) {
         <span className="absolute -bottom-[18px] -right-[18px] w-[36px] h-[36px] rounded-full bg-white border-2 border-[#68E1E0]" />
 
         <article className="flex flex-col max-sm:text-center">
-          <h3 className="text-2xl font-bold">{descuento.titulo_descuento}</h3>
-          <p className="text-lg">{descuento.descripcion_descuento}</p>
+          <h3 className="text-2xl font-bold">
+            {language === "es"
+              ? descuento.titulo_descuento
+              : descuento.titulo_descuento_en}
+          </h3>
+          <p className="text-lg">
+            {language === "es"
+              ? descuento.descripcion_descuento
+              : descuento.descripcion_descuento_en}
+          </p>
           <span className="text-[14px] font-bold mt-2">
-            {t.expiration}: {descuento.fecha_expiracion}
+            {t.expiration}: {formatDate(descuento.fecha_expiracion)}
           </span>
           <span className="text-[14px] font-medium">{t.valid}</span>
         </article>

@@ -32,8 +32,10 @@ export default function DescripcionClaseAccordion({ clase }: Props) {
             </h2>
           }
         >
-          <p className="font-light transition-all duration-300">
-            {clase.descripcion_clase}
+          <p className="font-light transition-all duration-300 whitespace-pre-line ">
+            {language === "es"
+              ? clase.descripcion_clase
+              : clase.descripcion_clase_en}{" "}
           </p>
         </AccordionItem>
       </Accordion>

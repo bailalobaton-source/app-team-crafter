@@ -247,14 +247,20 @@ export default function Header() {
               >
                 <div className="space-y-1">
                   <h3 className="text-sm text-[#fc68b9] font-bold leading-tight line-clamp-1">
-                    {clase.titulo_clase}
+                    {language === "es"
+                      ? clase.titulo_clase
+                      : clase.titulo_clase_en}
                   </h3>
-                  <p className="text-xs text-[#8A8A8A] font-medium line-clamp-2 leading-relaxed">
-                    {clase.descripcion_clase}
+                  <p className="text-xs text-[#8A8A8A] font-medium line-clamp-2 leading-relaxed whitespace-pre-line ">
+                    {language === "es"
+                      ? clase.descripcion_clase
+                      : clase.descripcion_clase_en}
                   </p>
                   {clase.recurso?.nombre_recurso && (
                     <p className="text-xs text-[#fc68b9] font-bold bg-[#FFE1F2] inline-block px-2 py-1 rounded-full">
-                      {clase.recurso.nombre_recurso}
+                      {language === "es"
+                        ? clase.recurso.nombre_recurso
+                        : clase.recurso.nombre_recurso_en}
                     </p>
                   )}
                 </div>

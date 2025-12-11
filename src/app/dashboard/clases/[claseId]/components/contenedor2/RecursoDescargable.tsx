@@ -102,7 +102,9 @@ export default function RecursoDescargable({ clase }: Props) {
                   />
                   <div className="space-y-2">
                     <h3 className="font-semibold text-[#8A8A8A] text-sm">
-                      {clase.recurso.nombre_recurso}
+                      {language === "es"
+                        ? clase.recurso.nombre_recurso
+                        : clase.recurso.nombre_recurso_en}
                     </h3>
                     <div className="border-2 border-[#FC68B9] rounded-full">
                       {clase.recurso?.fecha_caducidad && (
@@ -124,7 +126,9 @@ export default function RecursoDescargable({ clase }: Props) {
           </h2>
           <article className="flex flex-col gap-3 border-1 border-[#8A8A8A] rounded-2xl p-4 relative">
             <h3 className="text-medium text-[#8A8A8A] font-medium">
-              {clase.recurso?.nombre_recurso}
+              {language === "es"
+                ? clase.recurso?.nombre_recurso
+                : clase.recurso?.nombre_recurso_en}
             </h3>
             <button className="group w-min cursor-pointer bg-white text-[#FC68B9] font-semibold flex items-center gap-3 border-1 border-[#FC68B9] p-1.5 px-4 rounded-full hover:bg-[#FC68B9] hover:text-white duration-300">
               <div className="w-5 h-5 bg-[url(/icons/documento-pink.svg)] bg-no-repeat bg-center group-hover:bg-[url(/icons/documento.svg)] duration-300" />

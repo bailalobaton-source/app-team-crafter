@@ -3,10 +3,27 @@
 import Link from "next/link";
 import CardDescuento from "../../components/CardDescuento";
 import { useLanguageStore } from "@/stores/useLanguage.store";
+import { useCallback, useEffect, useState } from "react";
+import { Descuento } from "@/interfaces/descuentos.interface";
+import { getDescuentos } from "@/services/descuentos.service";
+import { handleAxiosError } from "@/utils/errorHandler";
 
 export default function DescuentoParati() {
   const { language } = useLanguageStore();
+  const [descuentos, setDescuentos] = useState<Descuento[]>([]);
 
+  const gfindClases = useCallback(async () => {
+    try {
+      const res = await getDescuentos();
+      setDescuentos(res);
+    } catch (err) {
+      handleAxiosError(err);
+    }
+  }, []); // 👈 dependencias
+
+  useEffect(() => {
+    gfindClases();
+  }, []);
   // 🌐 Traducciones
   const t = {
     es: {
@@ -32,23 +49,7 @@ export default function DescuentoParati() {
           {t.viewAll}
         </Link>
       </div>
-      <CardDescuento
-        descuento={{
-          id: 1,
-          valor_descuento: 20,
-          tipo_descuento: "porcentaje",
-          titulo_descuento:
-            language === "es"
-              ? "20% en Primer Taller"
-              : "20% off your First Workshop",
-          descripcion_descuento:
-            language === "es"
-              ? "Aprovecha un 20% de descuento en tu primer taller de scrapbooking. Ideal para quienes desean empezar a crear con nosotros."
-              : "Get 20% off your first scrapbooking workshop. Perfect for those who want to start creating with us.",
-          fecha_expiracion: "2024-11-15",
-          codigo_descuento: "PRIMERO20",
-        }}
-      />
+      <CardDescuento descuento={descuentos[0]} />
     </section>
   );
 }

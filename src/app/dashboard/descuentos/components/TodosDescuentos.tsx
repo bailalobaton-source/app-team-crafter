@@ -1,40 +1,27 @@
 import { Button } from "@heroui/react";
 import CardDescuento from "../../components/CardDescuento";
 import Image from "next/image";
+import { Descuento } from "@/interfaces/descuentos.interface";
+import { useCallback, useEffect, useState } from "react";
+import { getDescuentos } from "@/services/descuentos.service";
+import { handleAxiosError } from "@/utils/errorHandler";
 
-const descuentos = [
-  {
-    id: 1,
-    valor_descuento: 20,
-    tipo_descuento: "porcentaje",
-    titulo_descuento: "20% en Primer Taller",
-    descripcion_descuento:
-      "Aprovecha un 20% de descuento en tu primer taller de scrapbooking. Ideal para quienes desean empezar a crear con nosotros.",
-    fecha_expiracion: "15/11/2024",
-    codigo_descuento: "PRIMERO20",
-  },
-  {
-    id: 2,
-    valor_descuento: 15,
-    tipo_descuento: "porcentaje",
-    titulo_descuento: "Descuento en Kits de Materiales",
-    descripcion_descuento:
-      "Compra un kit de materiales y obtén un 15% de descuento en tu próxima compra. Perfecto para quienes buscan armar su colección de herramientas.",
-    fecha_expiracion: "15/11/2024",
-    codigo_descuento: "KIT15",
-  },
-  {
-    id: 3,
-    valor_descuento: 5,
-    tipo_descuento: "efectivo",
-    titulo_descuento: "5 USD de Descuento en Archivos Digitales",
-    descripcion_descuento:
-      "Obtén 5 USD de descuento en archivos digitales seleccionados. Diseños únicos listos para descargar y personalizar.",
-    fecha_expiracion: "15/11/2024",
-    codigo_descuento: "CLASE10",
-  },
-];
 export default function TodosDescuentos() {
+  const [descuentos, setDescuentos] = useState<Descuento[]>([]);
+
+  const gfindClases = useCallback(async () => {
+    try {
+      const res = await getDescuentos();
+      setDescuentos(res);
+    } catch (err) {
+      handleAxiosError(err);
+    }
+  }, []); // 👈 dependencias
+
+  useEffect(() => {
+    gfindClases();
+  }, []);
+
   return (
     <section className="w-full flex flex-col gap-7 mt-16 ">
       <Button
