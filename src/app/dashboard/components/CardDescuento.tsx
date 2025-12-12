@@ -98,9 +98,9 @@ export default function CardDescuento({ descuento }: Props) {
         <span className="absolute -bottom-[18px] -left-[18px] w-[36px] h-[36px] rounded-full bg-white" />
         <span className="absolute -bottom-[18px] -right-[18px] w-[36px] h-[36px] rounded-full bg-white" />
         <h3 className="text-4xl font-bold">
-          {descuento.tipo_descuento === "efectivo"
-            ? `$ ${descuento.valor_descuento}`
-            : `${descuento.valor_descuento}%`}
+          {descuento?.tipo_descuento === "efectivo"
+            ? `$ ${descuento?.valor_descuento}`
+            : `${descuento?.valor_descuento}%`}
         </h3>
         <h5 className="text-2xl font-bold">{t.discountLabel}</h5>
       </div>
@@ -115,16 +115,16 @@ export default function CardDescuento({ descuento }: Props) {
         <article className="flex flex-col max-sm:text-center">
           <h3 className="text-2xl font-bold">
             {language === "es"
-              ? descuento.titulo_descuento
-              : descuento.titulo_descuento_en}
+              ? descuento?.titulo_descuento
+              : descuento?.titulo_descuento_en}
           </h3>
           <p className="text-lg">
             {language === "es"
-              ? descuento.descripcion_descuento
-              : descuento.descripcion_descuento_en}
+              ? descuento?.descripcion_descuento
+              : descuento?.descripcion_descuento_en}
           </p>
           <span className="text-[14px] font-bold mt-2">
-            {t.expiration}: {formatDate(descuento.fecha_expiracion)}
+            {t.expiration}: {formatDate(descuento?.fecha_expiracion)}
           </span>
           <span className="text-[14px] font-medium">{t.valid}</span>
         </article>
@@ -138,7 +138,7 @@ export default function CardDescuento({ descuento }: Props) {
             copyIcon={<CopyIcon />}
           >
             <p className="font-bold text-white tracking-wide">
-              {descuento.codigo_descuento}
+              {descuento?.codigo_descuento}
             </p>
           </Snippet>
         </article>
