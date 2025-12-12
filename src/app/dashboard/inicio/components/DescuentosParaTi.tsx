@@ -12,7 +12,7 @@ export default function DescuentoParati() {
   const { language } = useLanguageStore();
   const [descuentos, setDescuentos] = useState<Descuento[]>([]);
 
-  const gfindClases = useCallback(async () => {
+  const gfindDescuentos = useCallback(async () => {
     try {
       const res = await getDescuentos();
       setDescuentos(res);
@@ -21,9 +21,6 @@ export default function DescuentoParati() {
     }
   }, []); // 👈 dependencias
 
-  useEffect(() => {
-    gfindClases();
-  }, []);
   // 🌐 Traducciones
   const t = {
     es: {
@@ -35,6 +32,10 @@ export default function DescuentoParati() {
       viewAll: "View all",
     },
   }[language];
+
+  useEffect(() => {
+    gfindDescuentos();
+  }, []);
 
   return (
     <section className="w-full flex flex-col gap-8 mt-14 mb-14">
@@ -49,7 +50,7 @@ export default function DescuentoParati() {
           {t.viewAll}
         </Link>
       </div>
-      <CardDescuento descuento={descuentos[0]} />
+      {descuentos.length > 0 && <CardDescuento descuento={descuentos[0]} />}
     </section>
   );
 }

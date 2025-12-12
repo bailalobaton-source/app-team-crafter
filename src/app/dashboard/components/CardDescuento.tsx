@@ -83,8 +83,6 @@ export default function CardDescuento({ descuento }: Props) {
     },
   }[language];
 
-  console.log(language);
-
   return (
     <article className="w-full relative flex overflow-hidden max-sm:flex-col">
       <span className="absolute -top-[18px] -right-[18px] w-[36px] h-[36px] rounded-full bg-white z-10" />
