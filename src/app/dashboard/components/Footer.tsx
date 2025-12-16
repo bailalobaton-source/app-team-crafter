@@ -90,8 +90,8 @@ export default function Footer() {
       <Divider className="bg-white  " />
       <section className="w-full p-10 flex flex-col items-center justify-center gap-3  max-sm:p-4">
         <h2 className="text-white  font-[Reboto] text-center max-sm:text-sm">
-          © 2024 - GLORIA LOBATÓN DISEÑO & SCRAP - MODO CRAFTER / TODOS LOS
-          DERECHOS RESERVADOS.
+          © {new Date().getFullYear()} - GLORIA LOBATÓN DISEÑO & SCRAP - MODO
+          CRAFTER / TODOS LOS DERECHOS RESERVADOS.
         </h2>
         <div className="flex items-center gap-6">
           {links2.map((link) => (
