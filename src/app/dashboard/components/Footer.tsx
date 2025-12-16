@@ -40,17 +40,17 @@ export default function Footer() {
   const links2 = [
     {
       id: 1,
-      href: "https://www.facebook.com/TeamCrafter",
+      href: "https://team-crafter.com/politicas-de-privacidad",
       text: "Política de Privacidad",
     },
     {
       id: 2,
-      href: "https://www.facebook.com/TeamCrafter",
+      href: "https://team-crafter.com/terminos-y-condiciones",
       text: "Términos y Condiciones",
     },
     {
       id: 3,
-      href: "https://www.facebook.com/TeamCrafter",
+      href: "https://team-crafter.com/politicas-de-cookies",
       text: "Configuración de Cookies",
     },
   ];
@@ -79,7 +79,7 @@ export default function Footer() {
           />
           <Link
             className="text-white font-bold underline"
-            href="/libro-reclamaciones"
+            href="https://team-crafter.com/libro-de-reclamaciones"
             target="_blank"
             rel="noopener noreferrer"
           >
