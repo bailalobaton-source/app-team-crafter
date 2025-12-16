@@ -25,7 +25,7 @@ export default function InformacionPersonal() {
       profilePic: "Fotografía de perfil",
       clickUpload: "Click para subir",
       orDrag: "o arrastra y suelta",
-      formats: "SVG, PNG, JPG o GIF (max. 800x400px)",
+      formats: "SVG, PNG, JPG o GIF ",
       name: "Nombre",
       surname: "Apellidos",
       email: "Correo electrónico",
@@ -43,7 +43,7 @@ export default function InformacionPersonal() {
       profilePic: "Profile picture",
       clickUpload: "Click to upload",
       orDrag: "or drag and drop",
-      formats: "SVG, PNG, JPG or GIF (max. 800x400px)",
+      formats: "SVG, PNG, JPG or GIF",
       name: "First Name",
       surname: "Last Name",
       email: "Email",
@@ -208,7 +208,6 @@ export default function InformacionPersonal() {
                 defaultValue={perfil?.nombre}
               />
               <Input
-                isRequired
                 classNames={inputClassNames3}
                 placeholder={t.surname}
                 labelPlacement="outside"
@@ -296,7 +295,6 @@ export default function InformacionPersonal() {
               <Input
                 className="w-full"
                 classNames={inputClassNames4}
-                isRequired
                 label=""
                 labelPlacement="outside"
                 type="number"
@@ -331,7 +329,7 @@ export default function InformacionPersonal() {
           <div className="w-full flex gap-2 justify-between max-sm:flex-col">
             <h4>
               {t.currentPassword}
-              <p className="text-[#FC68B9]">{t.modifyPassword}</p>
+              {/* <p className="text-[#FC68B9]">{t.modifyPassword}</p> */}
             </h4>
             <div className="w-full max-w-[572px] flex gap-4 ">
               <Input
