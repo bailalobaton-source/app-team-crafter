@@ -129,7 +129,7 @@ export default function CardRecursos({ recurso, width }: Props) {
 
       {/* 🔽 Nombre del recurso */}
       <h3 className="text-medium font-semibold text-[#8A8A8A] uppercase">
-        {recurso.nombre_recurso}
+        {language === "es" ? recurso.nombre_recurso : recurso.nombre_recurso_en}{" "}
       </h3>
 
       {/* 🔽 Modal cuando está caducado */}

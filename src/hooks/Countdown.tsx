@@ -5,6 +5,7 @@ import {
   differenceInMinutes,
   differenceInSeconds,
 } from "date-fns";
+import { useLanguageStore } from "@/stores/useLanguage.store";
 
 interface CountdownProps {
   fechaCaducidad: string; // formato "YYYY-MM-DD"
@@ -15,6 +16,7 @@ interface CountdownProps {
 export function useCountdown(fechaCaducidad: string, onDelete?: () => void) {
   const [countdown, setCountdown] = useState("");
   const [isExpired, setIsExpired] = useState(false);
+  const { language } = useLanguageStore();
 
   const getPeru = () => {
     const now = new Date();
@@ -41,7 +43,11 @@ export function useCountdown(fechaCaducidad: string, onDelete?: () => void) {
 
     if (diffDays >= 1) {
       // 👈 Mostrar SIEMPRE en días exactos
-      setCountdown(`Caduca en ${diffDays} día${diffDays > 1 ? "s" : ""}`);
+      setCountdown(
+        `${language === "es" ? "Caduca" : "Expired"} en ${diffDays} día${
+          diffDays > 1 ? "s" : ""
+        }`
+      );
     } else {
       // 👈 Si falta menos de un día → reloj hh:mm:ss
       const hours = String(differenceInHours(caducidad, nowPeru)).padStart(
@@ -55,7 +61,11 @@ export function useCountdown(fechaCaducidad: string, onDelete?: () => void) {
         differenceInSeconds(caducidad, nowPeru) % 60
       ).padStart(2, "0");
 
-      setCountdown(`Caduca en ${hours}:${minutes}:${seconds}`);
+      setCountdown(
+        `${
+          language === "es" ? "Caduca" : "Expired"
+        } en ${hours}:${minutes}:${seconds}`
+      );
     }
   };
 
