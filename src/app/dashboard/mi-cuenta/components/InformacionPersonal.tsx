@@ -15,9 +15,11 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { toast } from "sonner";
 import { useLanguageStore } from "@/stores/useLanguage.store";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function InformacionPersonal() {
   const { language } = useLanguageStore();
+  const [showPassword, setShowPassword] = useState(false);
 
   const t = {
     es: {
@@ -32,7 +34,7 @@ export default function InformacionPersonal() {
       phone: "Teléfono",
       dni: "DNI/ID/CE",
       passwordSection: "Contraseña",
-      currentPassword: "Contraseña actual",
+      currentPassword: "Escribe aquí tu nueva contraseña",
       modifyPassword: "Modificar contraseña",
       save: "Guardar",
       uploadingError: "Por favor selecciona un archivo de imagen válido",
@@ -50,13 +52,17 @@ export default function InformacionPersonal() {
       phone: "Phone",
       dni: "DNI/ID/CE",
       passwordSection: "Password",
-      currentPassword: "Current password",
+      currentPassword: "Enter your new password here",
       modifyPassword: "Change password",
       save: "Save",
       uploadingError: "Please select a valid image file",
       updatedSuccess: "Your information has been updated successfully",
     },
   }[language];
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const perfil = usePerfilStore((state) => state.perfil);
   const setPerfil = usePerfilStore((state) => state.setPerfil);
@@ -336,10 +342,24 @@ export default function InformacionPersonal() {
                 classNames={inputClassNames3}
                 labelPlacement="outside"
                 placeholder="****************"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 {...register("reset_password")}
                 radius="md"
                 defaultValue=""
+                endContent={
+                  <button
+                    className="cursor-pointer"
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    aria-label="toggle password visibility"
+                  >
+                    {showPassword ? (
+                      <AiOutlineEye className="text-2xl text-gray flex-shrink-0" />
+                    ) : (
+                      <AiOutlineEyeInvisible className="text-2xl text-gray flex-shrink-0" />
+                    )}
+                  </button>
+                }
               />
             </div>
           </div>
