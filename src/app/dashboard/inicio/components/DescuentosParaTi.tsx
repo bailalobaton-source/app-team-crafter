@@ -44,7 +44,7 @@ export default function DescuentoParati() {
           {t.title}
         </h2>
         <Link
-          href={"/"}
+          href={"/dashboard/descuentos"}
           className="text-lg font-semibold text-[#FC68B9] uppercase max-md:text-sm"
         >
           {t.viewAll}

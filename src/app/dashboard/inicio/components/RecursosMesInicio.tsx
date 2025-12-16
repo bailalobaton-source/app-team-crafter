@@ -44,7 +44,7 @@ export default function RecursosMesInicio() {
           {t.title}
         </h2>
         <Link
-          href={"/"}
+          href={"/dashboard/recursos"}
           className="text-lg font-semibold text-[#FC68B9] uppercase max-md:text-sm"
         >
           {t.viewAll}
