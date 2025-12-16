@@ -288,7 +288,11 @@ export default function Header() {
       </section>
 
       <div className="flex items-center gap-2 flex-shrink-0">
-        <Link href="/dashboard/notificaciones" aria-label="Notificaciones">
+        <Link
+          className="relative"
+          href="/dashboard/notificaciones"
+          aria-label="Notificaciones"
+        >
           <Image
             className="h-[40px] w-auto hover:opacity-80 transition-all duration-200 hover:scale-105"
             src="/icons/notification.svg"
@@ -296,6 +300,9 @@ export default function Header() {
             width={40}
             height={40}
           />
+          <span className="absolute -top-1.5 -right-1.5 w-5 h-5 flex items-center justify-center  bg-red-500 text-white rounded-full text-[11px] font-bold">
+            !
+          </span>
         </Link>
 
         <Dropdown
