@@ -62,23 +62,7 @@ export default function VideoPresentacion({ onOpenChange, isOpen }: Props) {
           onClick={handlePlayVideo}
         >
           {/* Poster con play */}
-          <div
-            className={`w-full transition-all duration-500 ease-in-out ${
-              isAnimating
-                ? "opacity-0 scale-110 transform"
-                : isPlaying
-                ? "opacity-0 scale-110 transform pointer-events-none"
-                : "opacity-100 scale-100"
-            }`}
-          >
-            <VideoPlayer
-              hlsUrl="https://vz-96e543ae-f21.b-cdn.net/6d25523f-e92d-426f-9554-5feefe04d959/playlist.m3u8"
-              mode="poster"
-            />
-          </div>
-
-          {/* Botón play */}
-          <button
+          {/* <button
             className={`w-14 absolute z-10 transition-all duration-300 ease-in-out transform hover:scale-110 cursor-pointer ${
               isAnimating
                 ? "opacity-0 scale-150"
@@ -95,19 +79,16 @@ export default function VideoPresentacion({ onOpenChange, isOpen }: Props) {
               width={100}
               height={100}
             />
-          </button>
+          </button> */}
 
           {/* Video en reproducción */}
           <div
-            className={`absolute inset-0 transition-all duration-500 ease-in-out ${
-              isPlaying
-                ? "opacity-100 scale-100"
-                : "opacity-0 scale-95 pointer-events-none"
-            }`}
+            className={`w-full inset-0 transition-all duration-500 ease-in-out `}
           >
-            {isPlaying && (
-              <VideoPlayer hlsUrl="https://vz-96e543ae-f21.b-cdn.net/6d25523f-e92d-426f-9554-5feefe04d959/playlist.m3u8" />
-            )}
+            <VideoPlayer
+              hlsUrl="https://vz-96e543ae-f21.b-cdn.net/6d25523f-e92d-426f-9554-5feefe04d959/playlist.m3u8"
+              autoPlay={true}
+            />
           </div>
 
           {/* Loader */}

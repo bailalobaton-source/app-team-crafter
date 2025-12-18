@@ -5,6 +5,7 @@ import { getBuscar } from "@/services/clases.service";
 import { useMenuUIStore } from "@/stores/menu.store";
 import { usePerfilStore } from "@/stores/perfil.store";
 import { useLanguageStore } from "@/stores/useLanguage.store";
+import { useVideoStore } from "@/stores/videoPresentacion.store";
 import { removeToken } from "@/utils/authUtils";
 import { handleAxiosError } from "@/utils/errorHandler";
 import {
@@ -21,6 +22,8 @@ import { useEffect, useRef, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 
 export default function Header() {
+  const clear = useVideoStore((state) => state.clear);
+
   const { toggleMenu, isOpen } = useMenuUIStore();
   const { language, toggleLanguage } = useLanguageStore();
 
@@ -60,6 +63,7 @@ export default function Header() {
 
   const handleLogout = () => {
     removeToken();
+    clear();
     router.push("/iniciar-sesion");
     window.location.reload();
   };

@@ -1,9 +1,13 @@
+import { useVideoStore } from "@/stores/videoPresentacion.store";
 import { removeToken } from "@/utils/authUtils";
 import { Link } from "@heroui/react";
 import Image from "next/image";
 
 export default function SuscripcionVencida() {
+  const clear = useVideoStore((state) => state.clear);
+
   const handleLogout = () => {
+    clear();
     removeToken();
     window.location.reload();
   };

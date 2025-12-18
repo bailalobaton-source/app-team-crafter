@@ -5,6 +5,7 @@ interface VideoState {
   hasWatchedVideo: boolean;
   setWatched: () => void;
   reset: () => void;
+  clear: () => void;
 }
 
 export const useVideoStore = create<VideoState>()(
@@ -13,9 +14,13 @@ export const useVideoStore = create<VideoState>()(
       hasWatchedVideo: false,
       setWatched: () => set({ hasWatchedVideo: true }),
       reset: () => set({ hasWatchedVideo: false }),
+      clear: () => {
+        useVideoStore.persist.clearStorage();
+        set({ hasWatchedVideo: false });
+      },
     }),
     {
-      name: "video-presentacion", // 👉 lo guarda en localStorage
+      name: "video-presentacion",
     }
   )
 );

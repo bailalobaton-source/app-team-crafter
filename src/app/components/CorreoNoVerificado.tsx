@@ -1,4 +1,5 @@
 import { User } from "@/interfaces/user.type";
+import { useVideoStore } from "@/stores/videoPresentacion.store";
 import { removeToken } from "@/utils/authUtils";
 import Image from "next/image";
 
@@ -7,8 +8,12 @@ interface Props {
 }
 
 export default function CorreoNoVerificado({ perfil }: Props) {
+  const clear = useVideoStore((state) => state.clear);
+
   const handleLogout = () => {
     removeToken();
+    clear();
+
     window.location.reload();
   };
   return (

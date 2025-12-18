@@ -2,26 +2,26 @@
 
 import { usePerfilStore } from "@/stores/perfil.store";
 import useSuscripcionStore from "@/stores/SuscripcionContext";
+import { useVideoStore } from "@/stores/videoPresentacion.store";
 import { removeToken } from "@/utils/authUtils";
 import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  Select,
-  SelectItem,
 } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { PiTextItalicDuotone } from "react-icons/pi";
 import { RiArrowDownSLine } from "react-icons/ri";
 
 export default function HeaderPlanes() {
+  const clear = useVideoStore((state) => state.clear);
   const perfil = usePerfilStore((state) => state.perfil);
   const { suscripcion } = useSuscripcionStore();
 
   const handleLogout = () => {
     removeToken();
+    clear();
     window.location.reload();
   };
   return (

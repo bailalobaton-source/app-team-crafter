@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useLanguageStore } from "@/stores/useLanguage.store";
 import { removeToken } from "@/utils/authUtils";
+import { useVideoStore } from "@/stores/videoPresentacion.store";
 
 interface Props {
   navSelect: number;
@@ -10,6 +11,8 @@ interface Props {
 }
 
 export default function NavMiCuenta({ navSelect, setNavSelect }: Props) {
+  const clear = useVideoStore((state) => state.clear);
+
   const router = useRouter();
   const { language } = useLanguageStore();
 
@@ -45,6 +48,7 @@ export default function NavMiCuenta({ navSelect, setNavSelect }: Props) {
 
   const handleLogout = () => {
     removeToken();
+    clear();
     router.push("/iniciar-sesion");
     window.location.reload();
   };

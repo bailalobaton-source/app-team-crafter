@@ -86,7 +86,7 @@ export default function VideoPlayer({
     <video
       ref={videoRef}
       controls={mode === "video" ? showControls : false}
-      className="w-full h-full object-cover rounded-2xl duration-300"
+      className="w-full h-full object-contain rounded-2xl duration-300"
       playsInline
       preload="metadata"
       poster={optimizedThumbnail} // 👈 se usa la versión liviana
