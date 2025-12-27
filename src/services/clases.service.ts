@@ -1,8 +1,8 @@
 import instance from "./auth/axiosInstance";
 
 export interface GetClasesParams {
-  categoria_clase?: string[];
-  tutoriales_tips?: string[];
+  categoria_clase?: number[];
+  tutoriales_tips?: number[];
   cuatro_ultimos?: string;
   order?: string;
 }

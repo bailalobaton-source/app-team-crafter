@@ -1,12 +1,16 @@
+import { CategoriaClase, TipClase } from "./categoriasTipsClase.interface";
 import { Recurso } from "./recurso.interface";
 
 export interface FormClase {
-  image_clase: File[] | null;
   video_clase: string;
+  duracion_video: string;
   titulo_clase: string;
+  titulo_clase_en: string;
   descripcion_clase: string;
-  categoria_clase: string;
-  tutoriales_tips: string;
+  descripcion_clase_en: string;
+  categoria_clase_id: string;
+  tutoriales_tips_id: string;
+  poster_url: string;
 }
 
 export interface Clase {
@@ -17,13 +21,14 @@ export interface Clase {
   titulo_clase_en: string;
   descripcion_clase: string;
   descripcion_clase_en: string;
+  duracion_video: string;
   nro_reproducciones: number;
   nro_likes: number;
-  categoria_clase: string;
-  tutoriales_tips: string;
-  duracion_video: string;
+  categoria_clase_id: string;
+  tutoriales_tips_id: string;
   status: "active" | "disabled";
-  createdAt: string;
   recurso: Recurso;
   poster_url: string;
+  categoria_clase: CategoriaClase;
+  tip_clase: TipClase;
 }

@@ -124,7 +124,12 @@ export default function CardDescuento({ descuento }: Props) {
           <span className="text-[14px] font-bold mt-2">
             {t.expiration}: {formatDate(descuento?.fecha_expiracion)}
           </span>
-          <span className="text-[14px] font-medium">{t.valid}</span>
+          <span className=" text-[14px] font-medium">
+            {language === "es" ? descuento?.texto_2_es : descuento?.texto_2_en}{" "}
+            <strong className="text-[#2daeae]">
+              {descuento.enlace_descuento || ""}
+            </strong>
+          </span>
         </article>
 
         <article className="flex flex-col items-center justify-center gap-1.5">

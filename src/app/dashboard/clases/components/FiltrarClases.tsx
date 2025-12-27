@@ -2,18 +2,28 @@
 
 import { Button } from "@heroui/react";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { IoIosArrowUp } from "react-icons/io";
 import { IoCloseOutline } from "react-icons/io5";
 import { useLanguageStore } from "@/stores/useLanguage.store"; // 🌍
 
+import {
+  getCategoriaClase,
+  getTipsClase,
+} from "@/services/categoriaTipClase.service";
+import { handleAxiosError } from "@/utils/errorHandler";
+import {
+  CategoriaClase,
+  TipClase,
+} from "@/interfaces/categoriasTipsClase.interface";
+
 interface Props {
   setOpenFilter: (open: boolean) => void;
   openFilter?: boolean;
-  setCategoria: (categorias: string[]) => void;
-  setTutorial: (tutoriales: string[]) => void;
-  categoria: string[];
-  tutorial: string[];
+  setCategoria: (e: number[]) => void;
+  setTutorial: (e: number[]) => void;
+  categoria: number[];
+  tutorial: number[];
   gfindClases: () => void;
 }
 
@@ -28,6 +38,32 @@ export default function FiltrarClases({
 }: Props) {
   const [openCategorias, setOpenCategorias] = useState(true);
   const [openTutoriales, setOpenTutoriales] = useState(true);
+  const [categorias, setCategorias] = useState<CategoriaClase[]>([]);
+  const [tips, setTips] = useState<TipClase[]>([]);
+
+  const gfindCategorias = useCallback(async () => {
+    try {
+      const res = await getCategoriaClase();
+      setCategorias(res);
+    } catch (err) {
+      handleAxiosError(err);
+    }
+  }, []);
+
+  const gfindTips = useCallback(async () => {
+    try {
+      const res = await getTipsClase();
+      setTips(res);
+    } catch (err) {
+      handleAxiosError(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    gfindCategorias();
+    gfindTips();
+  }, [gfindCategorias, gfindTips]);
+
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const { language } = useLanguageStore(); // 🔤 idioma actual
 
@@ -84,24 +120,7 @@ export default function FiltrarClases({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [openFilter, setOpenFilter]);
 
-  const categorias = [
-    { id: "Cake Toppers", label: t.cakeToppers },
-    { id: "Cajitas Temáticas", label: t.cajas },
-    { id: "Cartonaje", label: t.cartonaje },
-    { id: "Tarjetas Invitación", label: t.tarjetas },
-    { id: "Proyectos Varios", label: t.varios },
-  ];
-
-  const tutoriales = [
-    { id: "Tutoriales Silhouette Studio", label: t.tutSilhouette },
-    { id: "Tutoriales Cricut Design", label: t.tutCricut },
-    { id: "Tips de Diseño", label: t.tipsDesign },
-    { id: "Tips de Corte", label: t.tipsCut },
-    { id: "Varios/otros", label: t.others },
-  ];
-
-  // ✅ Selección de categorías
-  const handleCategoriaChange = (categoriaId: string) => {
+  const handleCategoriaChange = (categoriaId: number) => {
     setCategoria(
       categoria.includes(categoriaId)
         ? categoria.filter((id) => id !== categoriaId)
@@ -109,8 +128,7 @@ export default function FiltrarClases({
     );
   };
 
-  // ✅ Selección de tutoriales
-  const handleTutorialChange = (tutorialId: string) => {
+  const handleTutorialChange = (tutorialId: number) => {
     setTutorial(
       tutorial.includes(tutorialId)
         ? tutorial.filter((id) => id !== tutorialId)
@@ -179,7 +197,7 @@ export default function FiltrarClases({
                     className="appearance-none w-5 h-5 border-2 border-pink-500 rounded-md grid place-content-center before:content-['✓'] before:text-xs before:text-white before:font-bold before:scale-0 before:transition-transform before:duration-200 checked:bg-pink-500 checked:before:scale-100"
                   />
                   <span className="text-medium font-semibold text-gray-500">
-                    {cat.label}
+                    {language === "es" ? cat.nombre_es : cat.nombre_en}
                   </span>
                 </label>
               ))}
@@ -200,7 +218,7 @@ export default function FiltrarClases({
 
           {openTutoriales && (
             <div className="mt-4 space-y-2 pl-2">
-              {tutoriales.map((item) => (
+              {tips.map((item) => (
                 <label
                   key={item.id}
                   htmlFor={`tut-${item.id}`}
@@ -215,7 +233,7 @@ export default function FiltrarClases({
                     className="appearance-none w-5 h-5 border-2 border-pink-500 rounded-md grid place-content-center before:content-['✓'] before:text-xs before:text-white before:font-bold before:scale-0 before:transition-transform before:duration-200 checked:bg-pink-500 checked:before:scale-100"
                   />
                   <span className="text-medium font-semibold text-gray-500">
-                    {item.label}
+                    {language === "es" ? item.nombre_es : item.nombre_en}{" "}
                   </span>
                 </label>
               ))}
