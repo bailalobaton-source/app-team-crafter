@@ -27,7 +27,9 @@ export default function ClasesRelacionadas({ clase }: Props) {
   }[language];
 
   const gfindClases = useCallback(async () => {
-    const res = await getClases({ categoria_clase: [clase.categoria_clase] });
+    const res = await getClases({
+      categoria_clase: [clase.categoria_clase.id],
+    });
     setClases(res);
   }, [clase.categoria_clase]);
 

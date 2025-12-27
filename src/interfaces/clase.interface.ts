@@ -31,4 +31,5 @@ export interface Clase {
   poster_url: string;
   categoria_clase: CategoriaClase;
   tip_clase: TipClase;
+  createdAt: string;
 }

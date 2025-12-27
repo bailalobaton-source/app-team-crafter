@@ -10,8 +10,8 @@ import FiltrarClases from "../clases/components/FiltrarClases";
 export default function Favoritos() {
   const [openFilter, setOpenFilter] = useState(false);
   const [clases, setClases] = useState<Clase[]>([]);
-  const [categoria, setCategoria] = useState<string[]>([]);
-  const [tutorial, setTutorial] = useState<string[]>([]);
+  const [categoria, setCategoria] = useState<number[]>([]);
+  const [tutorial, setTutorial] = useState<number[]>([]);
   const [order, setOrder] = useState<"asc" | "desc">("desc"); // 👈 nuevo estado
 
   const gfindClases = useCallback(async () => {
