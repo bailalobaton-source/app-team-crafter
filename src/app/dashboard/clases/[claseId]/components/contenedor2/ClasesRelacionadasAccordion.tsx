@@ -29,10 +29,10 @@ export default function ClasesRelacionadasAccordion({ clase }: Props) {
 
   const gfindClases = useCallback(async () => {
     const res = await getClases({
-      categoria_clase: [clase.categoria_clase.id],
+      categoria_clase: clase.categorias_id?.map((i) => i.categoria_clase_id),
     });
     setClases(res);
-  }, [clase.categoria_clase]);
+  }, [clase.categorias_id]);
 
   useEffect(() => {
     gfindClases();
