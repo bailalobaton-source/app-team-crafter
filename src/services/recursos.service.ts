@@ -1,22 +1,32 @@
 import instance from "./auth/axiosInstance";
 
 interface GetRecursoParams {
-  categoria_recurso?: string | null;
-  tipo_recurso?: string | null;
+  categoria_recurso?: number[];
+  tipo_recurso?: number[];
   cuatro_ultimos?: string;
   order?: string;
 }
 
 export async function getRecursos(params: GetRecursoParams = {}) {
-  const query = new URLSearchParams({
-    categoria_recurso: params.categoria_recurso || "",
-    tipo_recurso: params.tipo_recurso || "",
-    cuatro_ultimos: params.cuatro_ultimos || "",
-    order: params.order || "",
-  }).toString();
+  const queryParams = new URLSearchParams();
 
-  const res = await instance.get(`/recurso?${query}`);
+  if (params.categoria_recurso?.length) {
+    queryParams.append("categoria_recurso", params.categoria_recurso.join(","));
+  }
 
+  if (params.tipo_recurso?.length) {
+    queryParams.append("tipo_recurso", params.tipo_recurso.join(","));
+  }
+
+  if (params.cuatro_ultimos) {
+    queryParams.append("cuatro_ultimos", params.cuatro_ultimos);
+  }
+
+  if (params.order) {
+    queryParams.append("order", params.order);
+  }
+
+  const res = await instance.get(`/recurso?${queryParams.toString()}`);
   return res.data.recursos;
 }
 

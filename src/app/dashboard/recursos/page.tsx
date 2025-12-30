@@ -10,15 +10,15 @@ import { getRecursos } from "@/services/recursos.service";
 export default function Recursos() {
   const [openFilter, setOpenFilter] = useState(false);
   const [recursos, setRecursos] = useState<Recurso[]>([]);
-  const [categoria, setCategoria] = useState("Todos");
-  const [tutorial, setTutorial] = useState("Todos");
+  const [categoria, setCategoria] = useState<number[]>([]);
+  const [tutorial, setTutorial] = useState<number[]>([]);
   const [order, setOrder] = useState<"asc" | "desc">("desc"); // 👈 nuevo estado
 
   const gfindRecursos = useCallback(async () => {
     try {
       const res = await getRecursos({
-        categoria_recurso: categoria,
-        tipo_recurso: tutorial,
+        categoria_recurso: categoria.length > 0 ? categoria : undefined,
+        tipo_recurso: tutorial.length > 0 ? tutorial : undefined,
         order,
       });
       setRecursos(res);

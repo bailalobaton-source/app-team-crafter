@@ -2,18 +2,27 @@
 
 import { Button } from "@heroui/react";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { IoIosArrowUp } from "react-icons/io";
 import { IoCloseOutline } from "react-icons/io5";
 import { useLanguageStore } from "@/stores/useLanguage.store";
+import {
+  CategoriaClase,
+  TipClase,
+} from "@/interfaces/categoriasTipsClase.interface";
+import {
+  getCategoriaRecurso,
+  getTipsRecurso,
+} from "@/services/categoriaTipClase.service";
+import { handleAxiosError } from "@/utils/errorHandler";
 
 interface Props {
   setOpenFilter: (open: boolean) => void;
   openFilter?: boolean;
-  setCategoria: (categoria: string) => void;
-  setTutorial: (tutorial: string) => void;
-  categoria: string;
-  tutorial: string;
+  setCategoria: (categoria: number[]) => void;
+  setTutorial: (tutorial: number[]) => void;
+  categoria: number[];
+  tutorial: number[];
   gfindRecursos: () => void;
 }
 
@@ -26,12 +35,39 @@ export default function FiltrarRecursos({
   tutorial,
   gfindRecursos,
 }: Props) {
+  const { language } = useLanguageStore();
+
   const [openCategorias, setOpenCategorias] = useState(true);
   const [openTutoriales, setOpenTutoriales] = useState(true);
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const [categorias, setCategorias] = useState<CategoriaClase[]>([]);
+  const [tips, setTips] = useState<TipClase[]>([]);
+
+  const gfindCategorias = useCallback(async () => {
+    try {
+      const res = await getCategoriaRecurso();
+      setCategorias(res);
+    } catch (err) {
+      handleAxiosError(err);
+    }
+  }, []);
+
+  const gfindTips = useCallback(async () => {
+    try {
+      const res = await getTipsRecurso();
+
+      setTips(res);
+    } catch (err) {
+      handleAxiosError(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    gfindCategorias();
+    gfindTips();
+  }, [gfindCategorias, gfindTips]);
 
   // 🌐 Store de idioma
-  const { language } = useLanguageStore();
 
   // 🌍 Traducciones
   const t = {
@@ -85,22 +121,21 @@ export default function FiltrarRecursos({
     };
   }, [openFilter, setOpenFilter]);
 
-  // 📚 Listas traducidas dinámicamente
-  const categorias = [
-    { id: "Todos", label: t.all },
-    { id: "Cake Toppers", label: t.cake },
-    { id: "Cajitas Temáticas", label: t.boxes },
-    { id: "Cartonaje", label: t.carton },
-    { id: "Tarjetas Invitación", label: t.invitations },
-    { id: "Proyectos Varios", label: t.projects },
-  ];
+  const handleCategoriaChange = (categoriaId: number) => {
+    setCategoria(
+      categoria.includes(categoriaId)
+        ? categoria.filter((id) => id !== categoriaId)
+        : [...categoria, categoriaId]
+    );
+  };
 
-  const tutoriales = [
-    { id: "Todos", label: t.all },
-    { id: "Exclusivos", label: t.exclusive },
-    { id: "Adicionales", label: t.additional },
-  ];
-
+  const handleTutorialChange = (tutorialId: number) => {
+    setTutorial(
+      tutorial.includes(tutorialId)
+        ? tutorial.filter((id) => id !== tutorialId)
+        : [...tutorial, tutorialId]
+    );
+  };
   return (
     <div
       className={`fixed top-0 right-0 w-screen h-screen flex justify-end bg-[#1717178a] z-[60]
@@ -154,26 +189,22 @@ export default function FiltrarRecursos({
 
           {openTutoriales && (
             <div className="mt-4 space-y-2 pl-2">
-              {tutoriales.map((item) => (
+              {tips?.map((tip) => (
                 <label
-                  key={item.id}
-                  htmlFor={`tut-${item.id}`}
-                  className="flex items-center gap-2 cursor-pointer select-none"
+                  key={tip.id}
+                  htmlFor={`tip-${tip.id}`}
+                  className="flex items-center gap-2 cursor-pointer"
                 >
                   <input
-                    type="radio"
-                    id={`tut-${item.id}`}
-                    name="tutorial"
-                    value={item.id}
-                    checked={tutorial === item.id}
-                    onChange={() => setTutorial(item.id)}
-                    className="appearance-none w-5 h-5 border-2 border-pink-500 rounded-full grid place-content-center
-                      before:content-[''] before:w-2.5 before:h-2.5 before:rounded-full before:scale-0 
-                      before:transition-transform before:duration-200 before:bg-pink-500
-                      checked:before:scale-100"
+                    type="checkbox"
+                    id={`tip-${tip.id}`}
+                    value={tip.id}
+                    checked={tutorial.includes(tip.id)}
+                    onChange={() => handleTutorialChange(tip.id)}
+                    className="appearance-none w-5 h-5 border-2 border-pink-500 rounded-md grid place-content-center before:content-['✓'] before:text-xs before:text-white before:font-bold before:scale-0 before:transition-transform before:duration-200 checked:bg-pink-500 checked:before:scale-100"
                   />
                   <span className="text-medium font-semibold text-gray-500">
-                    {item.label}
+                    {language === "es" ? tip.nombre_es : tip.nombre_en}
                   </span>
                 </label>
               ))}
@@ -200,7 +231,7 @@ export default function FiltrarRecursos({
 
           {openCategorias && (
             <div className="mt-4 space-y-2 pl-2">
-              {categorias.map((cat) => (
+              {categorias?.map((cat) => (
                 <label
                   key={cat.id}
                   htmlFor={`cat-${cat.id}`}
@@ -211,15 +242,15 @@ export default function FiltrarRecursos({
                     id={`cat-${cat.id}`}
                     name="categoria"
                     value={cat.id}
-                    checked={categoria === cat.id}
-                    onChange={() => setCategoria(cat.id)}
+                    checked={categoria.includes(cat.id)}
+                    onChange={() => handleCategoriaChange(cat.id)}
                     className="appearance-none w-5 h-5 border-2 border-pink-500 rounded-full grid place-content-center
                       before:content-[''] before:w-2.5 before:h-2.5 before:rounded-full before:scale-0 
                       before:transition-transform before:duration-200 before:bg-pink-500
                       checked:before:scale-100"
                   />
                   <span className="text-medium font-semibold text-gray-500">
-                    {cat.label}
+                    {language === "es" ? cat.nombre_es : cat.nombre_en}{" "}
                   </span>
                 </label>
               ))}

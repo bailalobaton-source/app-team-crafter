@@ -71,6 +71,11 @@ export default function Notificaciones() {
                   Ver ahora
                 </Link>
               )}
+              {notificacion.titulo.includes("Nuevo recurso") && (
+                <Link className="text-[#FC68B9]" href="/dashboard/recursos">
+                  Ver recurso
+                </Link>
+              )}
             </div>
           </article>
         ))}
