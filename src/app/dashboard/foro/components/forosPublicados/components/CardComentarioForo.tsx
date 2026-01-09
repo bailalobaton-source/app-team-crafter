@@ -134,7 +134,7 @@ export default function CardComentarioForo({ comentario }: Props) {
                 }
               >
                 <span className="text-sm font-medium">
-                  {comentario.respuesta_comentarios_foros?.length}
+                  {respuestacomentarios?.length}
                 </span>
               </Button>
             </div>
@@ -156,6 +156,7 @@ export default function CardComentarioForo({ comentario }: Props) {
               respuestaComentario={true}
               comentarioId={comentario.id}
               user_comentario_id={comentario.user_id}
+              findRespuestaComentarios={findRespuestaComentarios}
             />
           )}
         </div>

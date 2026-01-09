@@ -17,6 +17,7 @@ interface Props {
   comentarioId?: number;
   onCancel?: () => void;
   gfindForos?: () => void;
+  findRespuestaComentarios?: () => void;
 }
 
 export default function FormComentarForo({
@@ -27,6 +28,7 @@ export default function FormComentarForo({
   comentarioId,
   onCancel,
   gfindForos,
+  findRespuestaComentarios,
 }: Props) {
   const { register, handleSubmit, reset } = useForm<ComentarioForo>();
   const [isLoading, setIsLoading] = useState(false); // 🆕 Estado de carga
@@ -49,6 +51,10 @@ export default function FormComentarForo({
       if (gfindForos) {
         gfindForos();
       }
+      if (findRespuestaComentarios) {
+        findRespuestaComentarios();
+      }
+
       reset();
 
       toast.success(
