@@ -96,7 +96,7 @@ export default function CardDescuento({ descuento }: Props) {
         <span className="absolute -bottom-[18px] -left-[18px] w-[36px] h-[36px] rounded-full bg-white" />
         <span className="absolute -bottom-[18px] -right-[18px] w-[36px] h-[36px] rounded-full bg-white" />
         <h3 className="text-4xl font-bold">
-          {descuento?.tipo_descuento === "efectivo"
+          {descuento?.tipo_descuento === "monto"
             ? `$ ${descuento?.valor_descuento}`
             : `${descuento?.valor_descuento}%`}
         </h3>
