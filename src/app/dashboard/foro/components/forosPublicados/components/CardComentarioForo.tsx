@@ -31,7 +31,7 @@ export default function CardComentarioForo({ comentario }: Props) {
     RespuestaComentario[]
   >([]);
 
-  const classText = "text-lg text-[#FFB4DF] font-medium";
+  const classText = "text-lg text-[#FC68B9] font-medium";
 
   // 🌐 Traducciones
   const t = {
@@ -115,7 +115,7 @@ export default function CardComentarioForo({ comentario }: Props) {
                 {isLiked(comentario.id) ? (
                   <FaHeart className="text-2xl text-[#FC68B9] cursor-pointer" />
                 ) : (
-                  <PiHeart className="text-2xl text-[#FFB4DF] cursor-pointer" />
+                  <PiHeart className="text-2xl text-[#FC68B9] cursor-pointer" />
                 )}
               </button>
               <p className={classText}>{likesCount}</p>

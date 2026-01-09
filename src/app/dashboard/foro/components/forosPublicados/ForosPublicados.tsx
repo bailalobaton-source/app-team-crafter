@@ -7,9 +7,10 @@ import CardForo from "./components/CardForo";
 
 interface Props {
   foros: Foro[];
+  gfindForos: () => void;
 }
 
-export default function ForosPublicados({ foros }: Props) {
+export default function ForosPublicados({ foros, gfindForos }: Props) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectForo, setSelectForo] = useState<Foro | null>(null);
   const [colorForo, setColorForo] = useState<string>("");
@@ -33,6 +34,7 @@ export default function ForosPublicados({ foros }: Props) {
           isOpen={isOpen}
           selectForo={selectForo}
           colorForo={colorForo}
+          gfindForos={gfindForos}
         />
       )}
     </section>

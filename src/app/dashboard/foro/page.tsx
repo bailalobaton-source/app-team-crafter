@@ -34,7 +34,7 @@ export default function Foro() {
         <div className="w-full flex flex-col gap-6">
           <FiltrarForo order={order} setOrder={setOrder} />
           <NuevaPublicacion gfindForos={gfindForos} />
-          {foros && <ForosPublicados foros={foros} />}
+          {foros && <ForosPublicados foros={foros} gfindForos={gfindForos} />}
         </div>
         <div className="min-w-[312px] max-w-[312px] flex flex-col gap-6 max-sm:w-full max-sm:max-w-full">
           <ReglasForo />{" "}

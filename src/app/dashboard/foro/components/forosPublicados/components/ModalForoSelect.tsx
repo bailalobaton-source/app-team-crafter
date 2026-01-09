@@ -17,6 +17,7 @@ interface Props {
   onOpenChange: () => void;
   selectForo: Foro;
   colorForo: string;
+  gfindForos: () => void;
 }
 
 export default function ModalForoSelect({
@@ -24,6 +25,7 @@ export default function ModalForoSelect({
   onOpenChange,
   selectForo,
   colorForo,
+  gfindForos,
 }: Props) {
   const { isLiked, toggleLike } = useLikedForoStore();
   const { language } = useLanguageStore();
@@ -164,7 +166,7 @@ export default function ModalForoSelect({
                 }
               >
                 <span className="text-sm font-medium">
-                  {selectForo.comentarios_foro?.length}
+                  {comentariosForo?.length}
                 </span>
               </Button>
             </div>
@@ -182,12 +184,13 @@ export default function ModalForoSelect({
               <FormComentarForo
                 foroId={selectForo.id}
                 reloadForo={findComentariosForos}
+                gfindForos={gfindForos}
               />
             </div>
 
             <div className="w-full flex justify-between items-center mt-2">
               <span className="text-[#FC68B9] font-semibold">
-                {selectForo.comentarios_foro?.length} {t.comments}
+                {comentariosForo?.length} {t.comments}
               </span>
               <button
                 className="text-[#FC68B9] font-semibold flex items-center gap-2"
