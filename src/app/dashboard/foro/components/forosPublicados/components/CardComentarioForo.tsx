@@ -132,6 +132,7 @@ export default function CardComentarioForo({ comentario }: Props) {
                     className="opacity-80"
                   />
                 }
+                onPress={() => setOpenResponder(!openResponder)}
               >
                 <span className="text-sm font-medium">
                   {respuestacomentarios?.length}
