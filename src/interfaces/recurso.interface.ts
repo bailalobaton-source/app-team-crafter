@@ -1,3 +1,4 @@
+import { CategoriaClase, TipClase } from "./categoriasTipsClase.interface";
 import { Clase } from "./clase.interface";
 
 export interface FormClase {
@@ -18,15 +19,29 @@ export interface Recurso {
   link_recurso: string;
   img_recurso: string;
   fecha_caducidad: string;
-  tipo_recurso: string;
-  categoria_recurso: string;
   status: "active" | "disabled";
   createdAt: string;
   clase: Clase;
+  categorias_ids: CategoriaRecursoId[];
+  tipos_ids: TipRecursoId[];
 }
 
 export interface Descarga {
   id: number;
   fecha_descarga: string;
   recurso: Recurso;
+}
+
+export interface CategoriaRecursoId {
+  id: number;
+  clase_id: number;
+  categoria_recurso_id: number;
+  categoria_recurso: CategoriaClase;
+}
+
+export interface TipRecursoId {
+  id: number;
+  recurso_id: number;
+  tipo_recurso_id: number;
+  tipo_recurso: TipClase;
 }

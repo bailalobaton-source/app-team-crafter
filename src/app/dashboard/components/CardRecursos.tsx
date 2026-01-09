@@ -47,7 +47,9 @@ export default function CardRecursos({ recurso, width }: Props) {
       } flex flex-col gap-3 max-md:w-full`}
     >
       <div className="group w-full relative rounded-2xl overflow-hidden">
-        {recurso.tipo_recurso === "Exclusivos" && (
+        {recurso.tipos_ids.some(
+          (tipo) => tipo.tipo_recurso.nombre_es === "Exclusivos"
+        ) && (
           <Image
             className="absolute top-4 left-4 w-10 z-30"
             src={"/icons/corona.svg"}

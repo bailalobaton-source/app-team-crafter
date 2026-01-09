@@ -53,7 +53,9 @@ export default function ModalRecursoCaducado({
     >
       <ModalContent
         className={`w-full p-6 ${
-          recurso.tipo_recurso === "Exclusivos"
+          recurso.tipos_ids.some(
+            (tipo) => tipo.tipo_recurso.nombre_es === "Exclusivos"
+          )
             ? "bg-[#FFE1F2]"
             : "bg-[#FFEE97]"
         }`}
@@ -65,12 +67,16 @@ export default function ModalRecursoCaducado({
             <BsExclamationCircle className="text-2xl m-auto" />
             <h2 className="text-lg">{t.expiredTitle}</h2>
             <p>
-              {recurso.tipo_recurso === "Exclusivos"
+              {recurso.tipos_ids.some(
+                (tipo) => tipo.tipo_recurso.nombre_es === "Exclusivos"
+              )
                 ? t.exclusiveMessage
                 : t.normalMessage}
             </p>
 
-            {recurso.tipo_recurso === "Exclusivos" ? (
+            {recurso.tipos_ids.some(
+              (tipo) => tipo.tipo_recurso.nombre_es === "Exclusivos"
+            ) ? (
               <button
                 className="w-full p-3 text-xl bg-[#FC68B9] rounded-full text-[#FFFFFF] mt-2 cursor-pointer max-md:p-2"
                 onClick={() => setVerFormulario(true)}
