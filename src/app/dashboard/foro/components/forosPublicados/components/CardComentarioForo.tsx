@@ -33,7 +33,6 @@ export default function CardComentarioForo({ comentario }: Props) {
 
   const classText = "text-lg text-[#FC68B9] font-medium";
 
-  // 🌐 Traducciones
   const t = {
     es: {
       reply: "Responder",
