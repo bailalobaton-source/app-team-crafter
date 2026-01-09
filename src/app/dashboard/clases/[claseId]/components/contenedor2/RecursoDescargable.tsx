@@ -57,7 +57,9 @@ export default function RecursoDescargable({ clase }: Props) {
           </h2>
           <section
             className={`w-full p-4 rounded-2xl ${
-              clase.recurso.tipo_recurso === "Exclusivos"
+              clase.recurso.tipos_ids.some(
+                (tipo) => tipo.tipo_recurso.nombre_es === "Exclusivos"
+              )
                 ? "bg-[#FFE1F2]"
                 : "bg-[#FFEE97]"
             }`}
@@ -72,11 +74,15 @@ export default function RecursoDescargable({ clase }: Props) {
                 <BsExclamationCircle className="text-2xl m-auto" />
                 <h2 className="text-lg">{t.recursoCaducado}</h2>
                 <p className="text-sm">
-                  {clase.recurso.tipo_recurso === "Exclusivos"
+                  {clase.recurso.tipos_ids.some(
+                    (tipo) => tipo.tipo_recurso.nombre_es === "Exclusivos"
+                  )
                     ? t.exclusivoMensaje
                     : t.generalMensaje}
                 </p>
-                {clase.recurso.tipo_recurso === "Exclusivos" ? (
+                {clase.recurso.tipos_ids.some(
+                  (tipo) => tipo.tipo_recurso.nombre_es === "Exclusivos"
+                ) ? (
                   <button
                     className="w-full p-2 text-lg bg-[#FC68B9] rounded-full text-[#FFFFFF] cursor-pointer "
                     onClick={() => setVerFormulario(true)}
