@@ -57,7 +57,7 @@ export default function RecursoDescargable({ clase }: Props) {
           </h2>
           <section
             className={`w-full p-4 rounded-2xl ${
-              clase.recurso.tipos_ids.some(
+              clase.recurso?.tipos_ids?.some(
                 (tipo) => tipo.tipo_recurso.nombre_es === "Exclusivos"
               )
                 ? "bg-[#FFE1F2]"
@@ -74,14 +74,14 @@ export default function RecursoDescargable({ clase }: Props) {
                 <BsExclamationCircle className="text-2xl m-auto" />
                 <h2 className="text-lg">{t.recursoCaducado}</h2>
                 <p className="text-sm">
-                  {clase.recurso.tipos_ids.some(
+                  {clase?.recurso?.tipos_ids?.some(
                     (tipo) => tipo.tipo_recurso.nombre_es === "Exclusivos"
                   )
                     ? t.exclusivoMensaje
                     : t.generalMensaje}
                 </p>
-                {clase.recurso.tipos_ids.some(
-                  (tipo) => tipo.tipo_recurso.nombre_es === "Exclusivos"
+                {clase?.recurso?.tipos_ids?.some(
+                  (tipo) => tipo?.tipo_recurso?.nombre_es === "Exclusivos"
                 ) ? (
                   <button
                     className="w-full p-2 text-lg bg-[#FC68B9] rounded-full text-[#FFFFFF] cursor-pointer "
@@ -101,7 +101,7 @@ export default function RecursoDescargable({ clase }: Props) {
                 <article className="flex gap-2 text-start mt-2">
                   <Image
                     className="aspect-[1/1] w-20 h-20 rounded-xl"
-                    src={`${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/doc/${clase.recurso.img_recurso}`}
+                    src={`${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/${clase.recurso.img_recurso}`}
                     alt={`caducado ${clase.recurso.nombre_recurso}`}
                     width={100}
                     height={100}

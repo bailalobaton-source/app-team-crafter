@@ -69,7 +69,7 @@ export default function FormularioCaducado({ recurso, onOpenChange }: Props) {
       <article className="flex gap-2">
         <Image
           className="aspect-[1/1] w-24 rounded-xl"
-          src={`${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/doc/${recurso.img_recurso}`}
+          src={`${process.env.NEXT_PUBLIC_API_URL_UPLOADS}/${recurso.img_recurso}`}
           alt={`caducado ${recurso.nombre_recurso}`}
           width={100}
           height={100}
