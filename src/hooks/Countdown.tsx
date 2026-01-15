@@ -8,11 +8,10 @@ import {
 import { useLanguageStore } from "@/stores/useLanguage.store";
 
 interface CountdownProps {
-  fechaCaducidad: string; // formato "YYYY-MM-DD"
-  onDelete?: () => void; // opcional
+  fechaCaducidad: string;
+  onDelete?: () => void;
 }
 
-// Hook que devuelve countdown y estado de expiración
 export function useCountdown(fechaCaducidad: string, onDelete?: () => void) {
   const [countdown, setCountdown] = useState("");
   const [isExpired, setIsExpired] = useState(false);
@@ -31,7 +30,7 @@ export function useCountdown(fechaCaducidad: string, onDelete?: () => void) {
     const diffMs = caducidad.getTime() - nowPeru.getTime();
 
     if (diffMs <= 0) {
-      setCountdown("Caducado");
+      setCountdown(language === "es" ? "Caducado" : "Expired");
       if (!isExpired) {
         setIsExpired(true);
         onDelete?.();
@@ -42,14 +41,14 @@ export function useCountdown(fechaCaducidad: string, onDelete?: () => void) {
     const diffDays = differenceInDays(caducidad, nowPeru);
 
     if (diffDays >= 1) {
-      // 👈 Mostrar SIEMPRE en días exactos
       setCountdown(
-        `${language === "es" ? "Caduca" : "Expired"} en ${diffDays} día${
+        `${language === "es" ? "Caduca" : "Expires"} ${
+          language === "es" ? "en" : "in"
+        } ${diffDays} ${language === "es" ? "día" : "day"}${
           diffDays > 1 ? "s" : ""
         }`
       );
     } else {
-      // 👈 Si falta menos de un día → reloj hh:mm:ss
       const hours = String(differenceInHours(caducidad, nowPeru)).padStart(
         2,
         "0"
@@ -62,9 +61,9 @@ export function useCountdown(fechaCaducidad: string, onDelete?: () => void) {
       ).padStart(2, "0");
 
       setCountdown(
-        `${
-          language === "es" ? "Caduca" : "Expired"
-        } en ${hours}:${minutes}:${seconds}`
+        `${language === "es" ? "Caduca" : "Expires"} ${
+          language === "es" ? "en" : "in"
+        } ${hours}:${minutes}:${seconds}`
       );
     }
   };
@@ -73,12 +72,11 @@ export function useCountdown(fechaCaducidad: string, onDelete?: () => void) {
     updateCountdown();
     const interval = setInterval(updateCountdown, 1000);
     return () => clearInterval(interval);
-  }, [fechaCaducidad, isExpired]);
+  }, [fechaCaducidad, isExpired, language]); // ✅ Agregado 'language'
 
-  return { countdown, isExpired };
+  return { countdown, isExpired, language };
 }
 
-// Componente visual
 export default function Countdown({
   fechaCaducidad,
   onDelete,
