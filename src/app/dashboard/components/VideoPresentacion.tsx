@@ -2,7 +2,6 @@
 import { Modal, ModalContent } from "@heroui/react";
 import { useState } from "react";
 import VideoPlayer from "./VideoPlayer";
-import Image from "next/image";
 import { useVideoStore } from "@/stores/videoPresentacion.store";
 import { IoClose } from "react-icons/io5";
 
@@ -86,7 +85,7 @@ export default function VideoPresentacion({ onOpenChange, isOpen }: Props) {
             className={`w-full inset-0 transition-all duration-500 ease-in-out `}
           >
             <VideoPlayer
-              hlsUrl="https://vz-96e543ae-f21.b-cdn.net/6d25523f-e92d-426f-9554-5feefe04d959/playlist.m3u8"
+              hlsUrl="https://vz-96e543ae-f21.b-cdn.net/c5c3ddf8-0f9e-40f1-9f1c-a6bb507eb3f7/playlist.m3u8"
               autoPlay={true}
             />
           </div>
