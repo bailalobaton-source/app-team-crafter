@@ -110,7 +110,7 @@ export default function PreguntasFrecuentes() {
               }`}
             >
               <VideoPlayer
-                hlsUrl="https://vz-96e543ae-f21.b-cdn.net/c5c3ddf8-0f9e-40f1-9f1c-a6bb507eb3f7/playlist.m3u8"
+                hlsUrl="https://vz-96e543ae-f21.b-cdn.net/25e3e927-fb76-4ba1-8d0a-5e0688ff2bcc/playlist.m3u8"
                 mode="poster"
                 ThumbnailUrl="https://vz-96e543ae-f21.b-cdn.net/25e3e927-fb76-4ba1-8d0a-5e0688ff2bcc/thumbnail_8d3c0abd.jpg"
               />
@@ -144,7 +144,7 @@ export default function PreguntasFrecuentes() {
               }`}
             >
               {isPlaying && (
-                <VideoPlayer hlsUrl="https://vz-96e543ae-f21.b-cdn.net/25e3e927-fb76-4ba1-8d0a-5e0688ff2bcc/playlist.m3u8" />
+                <VideoPlayer hlsUrl="https://vz-96e543ae-f21.b-cdn.net/c5c3ddf8-0f9e-40f1-9f1c-a6bb507eb3f7/playlist.m3u8" />
               )}
             </div>
 
