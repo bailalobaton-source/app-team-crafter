@@ -127,7 +127,7 @@ export default function TuPedido() {
         >
           <div className="flex items-center justify-center gap-2">
             <span>
-              Suscribete con Tarjeta <br /> Credito o Debito
+              Suscríbete con <br /> Tarjeta Crédito o Débito
             </span>
           </div>{" "}
         </Button>
