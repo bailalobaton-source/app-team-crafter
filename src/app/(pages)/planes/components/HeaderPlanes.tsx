@@ -57,8 +57,8 @@ export default function HeaderPlanes() {
                 width={40}
                 height={40}
               />
-              <p className="text-base font-bold hidden max-sm:block">
-                Natalia Tobar
+              <p className="text-sm font-bold hidden max-sm:block">
+                {perfil?.nombre}
               </p>
               <RiArrowDownSLine className="text-2xl transition-transform duration-200 group-hover:rotate-180 max-md:hidden" />
             </div>
