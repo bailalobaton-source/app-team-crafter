@@ -126,7 +126,9 @@ export default function TuPedido() {
           // isDisabled={processingPayment}
         >
           <div className="flex items-center justify-center gap-2">
-            <span>Paga con Tarjeta Credito o Debito</span>
+            <span>
+              Paga con Tarjeta <br /> Credito o Debito
+            </span>
           </div>{" "}
         </Button>
         <Button

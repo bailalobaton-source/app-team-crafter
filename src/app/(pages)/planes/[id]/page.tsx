@@ -11,7 +11,7 @@ export default function PlanId() {
 
   return (
     <main className="relative w-full min-h-screen h-full p-10 py-14  flex gap-8 background-login max-sm:px-4">
-      <Link href="/planes" className=" absolute left-0 top-0 z-10">
+      <Link href="/planes" className=" absolute left-10 top-10 z-10">
         <Button
           className="bg-[#FC68B9] text-white font-bold rounded-full"
           startContent={

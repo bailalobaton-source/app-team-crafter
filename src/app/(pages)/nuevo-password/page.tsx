@@ -11,7 +11,7 @@ function NuevoPassword() {
   return (
     <main className="w-screen min-h-screen  h-full  background-login max-sm:h-auto max-sm:py-10 ">
       <div className="relative w-full min-h-screen h-full  max-w-[1440px] m-auto flex  p-12 overflow-hidden max-sm:flex-col-reverse max-sm:p-4 gap-10">
-        <Link href="/" className=" absolute left-0 top-0 z-10">
+        <Link href="/" className=" absolute left-10 top-10 z-10">
           <Button
             className="bg-[#FC68B9] text-white font-bold rounded-full"
             startContent={
