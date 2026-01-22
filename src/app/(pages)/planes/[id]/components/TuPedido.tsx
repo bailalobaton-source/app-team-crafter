@@ -126,15 +126,7 @@ export default function TuPedido() {
           // isDisabled={processingPayment}
         >
           <div className="flex items-center justify-center gap-2">
-            <span>Suscribirse</span>
-
-            <Image
-              src="/icons/flow.svg"
-              alt="PayPal Logo"
-              width={50}
-              height={60}
-              className="rounded-md"
-            />
+            <span>Paga con Tarjeta Credito o Debito</span>
           </div>{" "}
         </Button>
         <Button
@@ -143,7 +135,7 @@ export default function TuPedido() {
           onPress={fetchPaymentPaypal}
         >
           <div className="flex items-center justify-center gap-2">
-            <span>Suscribirse</span>
+            <span>Suscribete con</span>
 
             <Image
               src="/icons/paypal.svg"
