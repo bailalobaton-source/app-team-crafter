@@ -113,8 +113,6 @@ export default function InformacionPersonal() {
           formData.append("nombre", data.nombre);
           formData.append("apellidos", data.apellidos);
           formData.append("telefono", data.telefono);
-          formData.append("codigo_pais", data.codigo_pais);
-          formData.append("dni_id_ce", data.dni_id_ce || "");
           formData.append("newPassword", data.reset_password || "");
 
           if (selectedImage) formData.append("img", selectedImage);
@@ -132,7 +130,7 @@ export default function InformacionPersonal() {
         }
       }
     },
-    [selectedImage, perfil, reset, setPerfil, t.updatedSuccess]
+    [selectedImage, perfil, reset, setPerfil, t.updatedSuccess],
   );
 
   return (
@@ -247,71 +245,20 @@ export default function InformacionPersonal() {
           {/* Teléfono */}
           <div className="w-full relative flex gap-2 justify-between max-sm:flex-col">
             <h4>{t.phone}</h4>
-            <div className="relative w-full max-w-[572px] flex gap-0 border-1 rounded-xl ">
-              <Controller
-                name="codigo_pais"
-                control={control}
-                defaultValue={perfil?.codigo_pais || ""}
-                rules={{ required: `${t.phone} es obligatorio` }}
-                render={({
-                  field: { onChange, value },
-                  fieldState: { error },
-                }) => (
-                  <div className="relative">
-                    <PhoneInput
-                      value={value}
-                      onChange={(phone) => onChange(phone)}
-                      inputStyle={{
-                        width: "100px",
-                        height: "48px",
-                        borderRadius: "12px",
-                        border: "1px solid #8A8A8A",
-                        paddingLeft: "50px",
-                        fontSize: "14px",
-                        fontWeight: "400",
-                        backgroundColor: "#ffff",
-                        color: "#18181b",
-                        outline: "none",
-                        transition: "all 0.2s ease",
-                      }}
-                      buttonStyle={{
-                        border: "none",
-                        backgroundColor: "transparent",
-                        borderRadius: "5px",
-                        paddingLeft: "10px",
-                        paddingRight: "8px",
-                      }}
-                      containerStyle={{
-                        width: "100px",
-                      }}
-                      dropdownStyle={{
-                        borderRadius: "5px",
-                        border: "2px solid #8A8A8A",
-                        boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-                      }}
-                    />
-                    {error && (
-                      <p className="text-xs text-red-500 mt-1 ml-3">
-                        {error.message}
-                      </p>
-                    )}
-                  </div>
-                )}
-              />
+            <div className="w-full max-w-[572px] flex gap-4 ">
               <Input
                 className="w-full"
-                classNames={inputClassNames4}
-                label=""
+                classNames={inputClassNames3}
+                label="Teléfono"
                 labelPlacement="outside"
-                type="number"
+                type="text"
                 {...register("telefono")}
                 defaultValue={perfil?.telefono}
-                radius="none"
               />
             </div>
           </div>
 
-          {/* DNI */}
+          {/* DNI
           <div className="w-full flex gap-2 justify-between max-sm:flex-col">
             <h4>{t.dni}</h4>
             <div className="w-full max-w-[572px] flex gap-4 ">
@@ -326,7 +273,7 @@ export default function InformacionPersonal() {
                 defaultValue={perfil?.dni_id_ce || ""}
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Contraseña */}
           <h3 className="text-2xl text-[#8A8A8A] font-bold ">
