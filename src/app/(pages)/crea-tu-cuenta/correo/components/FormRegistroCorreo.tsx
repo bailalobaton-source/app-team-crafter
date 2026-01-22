@@ -120,6 +120,24 @@ function FormRegistroCorreoContent() {
         className="w-full max-w-[500px] flex flex-col justify-center items-center gap-6"
       >
         <div className="w-full flex flex-col gap-8">
+          <Select
+            isRequired
+            className="w-full"
+            classNames={selectClassNames}
+            label="País"
+            labelPlacement="outside"
+            placeholder="Selecccione un país"
+            {...register("pais")}
+            selectionMode="single"
+            maxListboxHeight={200}
+            id="21312312312"
+          >
+            {paises.map((p) => (
+              <SelectItem key={p.nameES} textValue={p.nameES}>
+                {p.nameES}
+              </SelectItem>
+            ))}
+          </Select>
           <Input
             isRequired
             classNames={inputClassNames}
@@ -184,24 +202,7 @@ function FormRegistroCorreoContent() {
             }
             radius="full"
           />
-          <Select
-            isRequired
-            className="w-full"
-            classNames={selectClassNames}
-            label="País"
-            labelPlacement="outside"
-            placeholder="Selecccione un país"
-            {...register("pais")}
-            selectionMode="single"
-            maxListboxHeight={200}
-            id="21312312312"
-          >
-            {paises.map((p) => (
-              <SelectItem key={p.nameES} textValue={p.nameES}>
-                {p.nameES}
-              </SelectItem>
-            ))}
-          </Select>
+
           {/* Campo de teléfono */}
           <Input
             className="w-full"
