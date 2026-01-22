@@ -1,8 +1,8 @@
 export const planes = [
   {
-    id: 1,
+    id: 4,
     nombre_plan: "Plan Básico",
-    precio_plan: 5,
+    precio_plan: 1,
     titulo: " Paga por 1 mes",
     descripcion: "*30 días de contenido exclusivo",
     color_card: "#FFEE97",
