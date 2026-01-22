@@ -1,3 +1,5 @@
+"use client";
+
 import { Suspense } from "react";
 import PsAi from "../../components/PsAi";
 import FormCambiarPassword from "./components/FormCambiarPassword";
