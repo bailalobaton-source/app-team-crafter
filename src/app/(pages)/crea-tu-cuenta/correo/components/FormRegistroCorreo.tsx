@@ -11,9 +11,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useState, Suspense } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { Signup } from "../../../../../interfaces/auth.type";
 import { postSignup } from "@/services/auth/auth.service";
