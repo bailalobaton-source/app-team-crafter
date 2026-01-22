@@ -1,7 +1,13 @@
 "use client";
 
-import { inputClassNames, inputClassNames2 } from "@/utils/classNames";
-import { Button, Input, useDisclosure } from "@heroui/react";
+import { inputClassNames, selectClassNames } from "@/utils/classNames";
+import {
+  Button,
+  Input,
+  Select,
+  SelectItem,
+  useDisclosure,
+} from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useState, Suspense } from "react";
@@ -16,6 +22,7 @@ import { handleAxiosError } from "@/utils/errorHandler";
 import Loading from "@/app/components/Loading";
 import { useRouter, useSearchParams } from "next/navigation";
 import ModalOlvideContraseña from "@/app/(pages)/iniciar-sesion/components/ModalOlvideContraseña";
+import { paises } from "@/data/paises";
 
 function FormRegistroCorreoContent() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -28,7 +35,6 @@ function FormRegistroCorreoContent() {
     register,
     handleSubmit,
     reset,
-    control,
     watch,
     formState: { errors },
   } = useForm<Signup>();
@@ -40,8 +46,7 @@ function FormRegistroCorreoContent() {
     "apellidos",
     "correo",
     "password",
-    "telefono",
-    "codigo_pais",
+    "pais",
   ]);
 
   const isFormValid = watchedFields.every((field) => {
@@ -73,7 +78,7 @@ function FormRegistroCorreoContent() {
         setLoading(false);
       }
     },
-    [reset, plan, router]
+    [reset, plan, router],
   );
 
   const validatePassword = (password: string) => {
@@ -179,82 +184,33 @@ function FormRegistroCorreoContent() {
             }
             radius="full"
           />
-          <Input
+          <Select
             isRequired
+            className="w-full"
+            classNames={selectClassNames}
+            label="País"
+            labelPlacement="outside"
+            placeholder="Selecccione un país"
+            {...register("pais")}
+            selectionMode="single"
+            maxListboxHeight={200}
+            id="21312312312"
+          >
+            {paises.map((p) => (
+              <SelectItem key={p.nameES} textValue={p.nameES}>
+                {p.nameES}
+              </SelectItem>
+            ))}
+          </Select>
+          {/* Campo de teléfono */}
+          <Input
+            className="w-full"
             classNames={inputClassNames}
-            label="DNI/ID/CE"
+            label="Teléfono"
             labelPlacement="outside"
             type="text"
-            {...register("dni_id_ce")}
-            errorMessage="El DNI/ID/CE es obligatorio"
-            radius="full"
-            placeholder="Escribe tu DNI/ID/CE"
+            {...register("telefono")}
           />
-
-          {/* Campo de teléfono */}
-          <div className="relative flex flex-col gap-1">
-            <Input
-              className="absolute right-0 w-[calc(100%-105px)] bottom-0 z-10"
-              classNames={inputClassNames2}
-              isRequired
-              label=""
-              labelPlacement="outside"
-              type="number"
-              {...register("telefono", { required: true })}
-            />
-            <label className="text-gray text-base font-medium pb-1.5">
-              Teléfono
-            </label>
-            <Controller
-              name="codigo_pais"
-              control={control}
-              rules={{ required: "El teléfono es obligatorio" }}
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
-                <div className="relative">
-                  <PhoneInput
-                    value={value}
-                    country={"us"}
-                    onChange={(phone) => onChange(phone)}
-                    inputStyle={{
-                      width: "150px",
-                      height: "48px",
-                      borderRadius: "9999px",
-                      paddingLeft: "60px",
-                      fontSize: "14px",
-                      fontWeight: "400",
-                      backgroundColor: "#F1F6FB",
-                      color: "#18181b",
-                      outline: "none",
-                      transition: "all 0.2s ease",
-                    }}
-                    buttonStyle={{
-                      border: "none",
-                      backgroundColor: "transparent",
-                      borderRadius: "10px",
-                      paddingLeft: "16px",
-                      paddingRight: "8px",
-                    }}
-                    containerStyle={{
-                      width: "150px",
-                    }}
-                    dropdownStyle={{
-                      borderRadius: "12px",
-                      border: "2px solid #e4e4e7",
-                      boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-                    }}
-                  />
-                  {error && (
-                    <p className="text-xs text-red-500 mt-1 ml-3">
-                      {error.message}
-                    </p>
-                  )}
-                </div>
-              )}
-            />
-          </div>
         </div>
 
         <button
