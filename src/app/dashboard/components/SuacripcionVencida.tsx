@@ -31,8 +31,9 @@ export default function SuscripcionVencida() {
             width={200}
             height={200}
           />
-          <h2 className="text-4xl text-[#FC68B9] font-black text-nowrap">
-            Usted no cuenta con una suscripción activa
+          <h2 className="text-3xl text-[#FC68B9] font-black text-nowrap">
+            Usted no cuenta con una <br />
+            suscripción activa
           </h2>
           <p className="text-lg text-[#8A8A8A] font-medium">
             Para acceder al contenido exclusivo, necesitas una suscripción
