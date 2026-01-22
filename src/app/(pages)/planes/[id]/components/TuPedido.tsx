@@ -125,11 +125,10 @@ export default function TuPedido() {
           onPress={fetchPayment}
           // isDisabled={processingPayment}
         >
-          <div className="flex items-center justify-center eading-snug ">
-            <span>
-              Suscríbete con <br /> Tarjeta Crédito o Débito
-            </span>
-          </div>{" "}
+          <div className="flex flex-col items-center justify-center leading-tight text-center">
+            <span>Suscríbete con</span>
+            <span>Tarjeta Crédito o Débito</span>
+          </div>
         </Button>
         <Button
           className="w-[270px] bg-white  text-[#222D65] text-md  font-bold px-10 py-5 border-3 border-[#fa89c7] hover:bg-[#fc68b9] hover:border-[#fc68b9] hover:text-white shadow-rigth-yellow duration-500 flex flex-col items-center gap-2"
