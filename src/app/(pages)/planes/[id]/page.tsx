@@ -39,7 +39,7 @@ export default function PlanId() {
             </svg>
           }
         >
-          Atras
+          Regresar
         </Button>
       </Link>
       <div className="w-full  h-full max-w-[1440px] mx-auto flex   overflow-hidden max-sm:p-0 max-sm:flex-col-reverse">

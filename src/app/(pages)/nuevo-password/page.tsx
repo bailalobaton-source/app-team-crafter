@@ -39,7 +39,7 @@ function NuevoPassword() {
               </svg>
             }
           >
-            Atras
+            Regresar
           </Button>
         </Link>
         <PsAi />

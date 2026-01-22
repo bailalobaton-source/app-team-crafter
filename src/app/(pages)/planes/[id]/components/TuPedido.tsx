@@ -125,7 +125,7 @@ export default function TuPedido() {
           onPress={fetchPayment}
           // isDisabled={processingPayment}
         >
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center eading-snug ">
             <span>
               Suscríbete con <br /> Tarjeta Crédito o Débito
             </span>

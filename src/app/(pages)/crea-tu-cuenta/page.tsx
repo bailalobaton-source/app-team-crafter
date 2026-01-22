@@ -8,7 +8,7 @@ export default function CreaTuCuenta() {
   return (
     <main className="w-screen min-h-screen  h-full  background-login  max-md:h-auto ">
       <div className="relative w-full min-h-screen h-full  max-w-[1440px] mx-auto flex    p-12 max-md:flex-col-reverse  max-md:p-4 max-md:py-10 max-md:gap-10 max-md:h-auto">
-        <Link href="/planes" className=" absolute left-0 top-0 z-10">
+        <Link href="/planes" className=" absolute left-10 top-10 z-10">
           <Button
             className="bg-[#FC68B9] text-white font-bold rounded-full"
             startContent={
@@ -36,7 +36,7 @@ export default function CreaTuCuenta() {
               </svg>
             }
           >
-            Atras
+            Regresar
           </Button>
         </Link>
         <PsAi />
