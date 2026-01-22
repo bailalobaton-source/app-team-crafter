@@ -32,12 +32,14 @@ export default function SuscripcionVencida() {
             height={200}
           />
           <h2 className="text-4xl text-[#FC68B9] font-black text-nowrap">
-            Suscripción vencida
+            Usted no cuenta con una suscripción activa
           </h2>
           <p className="text-lg text-[#8A8A8A] font-medium">
-            Tu suscripción ha vencido. Para seguir disfrutando del contenido
-            exclusivo, renuévala ahora.
+            Para acceder al contenido exclusivo, necesitas una suscripción
+            activa. Suscribete a tu plan cuando desees y continúa aprendiendo
+            con nosotros.
           </p>
+
           <Link
             href={"/planes"}
             className="w-fit  bg-[#fc68b9] text-white text-lg font-semibold px-10 py-2 border-5 border-[#fc68b9] rounded-full hover:bg-[#fc68b9] hover:border-[#fc68b9] hover:text-[#ffee97] shadow-rigth-yellow duration-500"
