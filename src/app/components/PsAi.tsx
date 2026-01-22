@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function PsAi() {
   return (
     <section className=" relative w-1/2  h-full   max-md:w-full max-md:h-auto overflow-hidden ">
-      <Link href="/planes" className=" absolute left-10 top-10 z-10">
+      <Link href="/planes" className=" absolute left-0 top-0 z-10">
         <Button
           className="bg-[#FC68B9] text-white font-bold rounded-full"
           startContent={
