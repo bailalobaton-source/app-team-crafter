@@ -126,9 +126,13 @@ export default function CardDescuento({ descuento }: Props) {
           </span>
           <span className=" text-[14px] font-medium">
             {language === "es" ? descuento?.texto_2_es : descuento?.texto_2_en}{" "}
-            <strong className="text-[#2daeae]">
+            <a
+              href={descuento.enlace_descuento}
+              target="_blank"
+              className="text-[#2daeae]"
+            >
               {descuento.enlace_descuento || ""}
-            </strong>
+            </a>
           </span>
         </article>
 
