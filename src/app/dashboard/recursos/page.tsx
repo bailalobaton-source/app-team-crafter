@@ -22,6 +22,7 @@ export default function Recursos() {
         order,
       });
       setRecursos(res);
+      console.log(res);
     } catch (err) {
       handleAxiosError(err);
     }
