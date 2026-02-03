@@ -6,24 +6,30 @@ import TituloFiltroClases from "./components/TituloFiltroClases";
 import { Clase } from "@/interfaces/clase.interface";
 import { getClases } from "@/services/clases.service";
 import { handleAxiosError } from "@/utils/errorHandler";
+import LoadingTransparente from "@/app/components/LoadingTransparente";
 
 export default function Clases() {
   const [openFilter, setOpenFilter] = useState(false);
   const [clases, setClases] = useState<Clase[]>([]);
   const [categoria, setCategoria] = useState<number[]>([]);
   const [tutorial, setTutorial] = useState<number[]>([]);
-  const [order, setOrder] = useState<"asc" | "desc">("desc"); // 👈 nuevo estado
+  const [order, setOrder] = useState<"asc" | "desc">("desc");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const gfindClases = useCallback(async () => {
+    setLoading(true);
     try {
       const res = await getClases({
         categoria_clase: categoria.length > 0 ? categoria : undefined,
         tutoriales_tips: tutorial.length > 0 ? tutorial : undefined,
         order,
       });
+
       setClases(res);
     } catch (err) {
       handleAxiosError(err);
+    } finally {
+      setLoading(false);
     }
   }, [categoria, tutorial, order]); // 👈 dependencias
 
@@ -33,6 +39,7 @@ export default function Clases() {
 
   return (
     <main className="w-full    mx-auto  px-10 py-8 max-md:px-4">
+      {loading && <LoadingTransparente />}
       <TituloFiltroClases
         setOpenFilter={setOpenFilter}
         order={order}

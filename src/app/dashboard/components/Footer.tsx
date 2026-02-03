@@ -27,12 +27,12 @@ export default function Footer() {
     },
     {
       id: 3,
-      href: "https://www.tiktok.com/@modocrafteroficial?_t=ZS-901XZlGWL5d&_r=1",
+      href: "https://www.tiktok.com/@glorialobatondiseno",
       icon: <FaTiktok />,
     },
     {
       id: 4,
-      href: "https://www.youtube.com/@modocrafteroficial",
+      href: "https://www.youtube.com/@glorialobatondiseno",
       icon: <FaYoutube />,
     },
   ];
