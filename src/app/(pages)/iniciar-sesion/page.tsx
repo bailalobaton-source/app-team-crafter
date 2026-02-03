@@ -12,7 +12,7 @@ export default function IniciarSesion() {
         <PsAi />
         <a
           href="https://team-crafter.com/"
-          className="absolute top-4 left-4 flex gap-2 items-center bg-white p-1 px-4 rounded-full border-1 text-md font-bold
+          className="absolute top-4 left-4  z-10 flex gap-2 items-center bg-white p-1 px-4 rounded-full border-1 text-md font-bold
           max-sm:relative max-sm:mx-auto max-sm:-mt-4 w-fit"
         >
           <LuDoorOpen className="text-xl" />

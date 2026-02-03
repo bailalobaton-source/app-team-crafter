@@ -54,7 +54,7 @@ function MetodosRegistroContent() {
       <div className="text-sm flex gap-2">
         <p className="text-gray ">¿Ya tienes una cuenta?</p>
         <Link href={`/`} className="color-pink  font-semibold">
-          Iniciar Sesisón
+          Iniciar Sesión
         </Link>
       </div>
     </section>
