@@ -51,6 +51,15 @@ function MetodosRegistroContent() {
           Continuar con correo
         </Link>
       </div>
+      <div className="text-sm flex gap-2">
+        <p className="text-gray ">¿Ya tienes una cuenta?</p>
+        <Link
+          href={`/crea-tu-cuenta?${plan ? `plan=${plan}` : ""}`}
+          className="color-pink  font-semibold"
+        >
+          Iniciar Sesisón
+        </Link>
+      </div>
     </section>
   );
 }
