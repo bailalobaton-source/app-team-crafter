@@ -125,7 +125,7 @@ export default function FiltrarRecursos({
     setCategoria(
       categoria.includes(categoriaId)
         ? categoria.filter((id) => id !== categoriaId)
-        : [...categoria, categoriaId]
+        : [...categoria, categoriaId],
     );
   };
 
@@ -133,7 +133,7 @@ export default function FiltrarRecursos({
     setTutorial(
       tutorial.includes(tutorialId)
         ? tutorial.filter((id) => id !== tutorialId)
-        : [...tutorial, tutorialId]
+        : [...tutorial, tutorialId],
     );
   };
   return (
@@ -238,16 +238,12 @@ export default function FiltrarRecursos({
                   className="flex items-center gap-2 cursor-pointer select-none"
                 >
                   <input
-                    type="radio"
+                    type="checkbox"
                     id={`cat-${cat.id}`}
-                    name="categoria"
                     value={cat.id}
                     checked={categoria.includes(cat.id)}
                     onChange={() => handleCategoriaChange(cat.id)}
-                    className="appearance-none w-5 h-5 border-2 border-pink-500 rounded-full grid place-content-center
-                      before:content-[''] before:w-2.5 before:h-2.5 before:rounded-full before:scale-0 
-                      before:transition-transform before:duration-200 before:bg-pink-500
-                      checked:before:scale-100"
+                    className="appearance-none w-5 h-5 border-2 border-pink-500 rounded-md grid place-content-center before:content-['✓'] before:text-xs before:text-white before:font-bold before:scale-0 before:transition-transform before:duration-200 checked:bg-pink-500 checked:before:scale-100"
                   />
                   <span className="text-medium font-semibold text-gray-500">
                     {language === "es" ? cat.nombre_es : cat.nombre_en}{" "}
