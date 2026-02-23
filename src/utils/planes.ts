@@ -1,8 +1,10 @@
 export const planes = [
   {
     id: 4,
+    id_mp: "213a0c6a6d094d33a81e7c7669eae660",
     nombre_plan: "Plan Básico",
     precio_plan: 1,
+    precio_plan_soles: 3.6,
     titulo: " Paga por 1 mes",
     descripcion: "*30 días de contenido exclusivo",
     color_card: "#FFEE97",
@@ -13,8 +15,10 @@ export const planes = [
   },
   {
     id: 2,
+    id_mp: "80113a231f3a45f0b7f7829629507c0a",
     nombre_plan: "Plan Estándar",
     precio_plan: 27,
+    precio_plan_soles: 99,
     titulo: " Paga por 6 meses y ahorra 10%",
     descripcion: "*precio regular $30USD",
     color_card: "#C3F3F3",
@@ -25,8 +29,10 @@ export const planes = [
   },
   {
     id: 3,
+    id_mp: "e052b3b40cb4444c96550d28ed54789f",
     nombre_plan: "Plan Pro Crafter",
     precio_plan: 55,
+    precio_plan_soles: 192,
     titulo: "Paga una vez al año",
     descripcion: "*precio regular $60USD",
     color_card: "#FFB4DF",

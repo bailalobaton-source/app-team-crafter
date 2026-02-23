@@ -34,7 +34,8 @@ body {
 .background-login {
   background-color: #ffffff;
 
-  background-image: radial-gradient(
+  background-image:
+    radial-gradient(
       57.6% 88.49% at 6.88% 121.95%,
       #ffb4df 0%,
       rgba(255, 180, 223, 0) 100%
