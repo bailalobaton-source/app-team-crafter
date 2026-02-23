@@ -2,9 +2,8 @@ import instance from "./axiosInstance";
 
 // Opcional pero recomendado: Crear una interfaz para tipar los datos
 export interface SuscripcionMPData {
-  reason: string;
-  payer_email: string;
-  card_token_id: string;
+  id: number;
+  paypalSubscriptionId: string;
 }
 
 export async function postSuscripcion(
@@ -21,9 +20,14 @@ export async function postSuscripcion(
   }
 }
 
-export async function postSuscripcionPaypal(id: number) {
+export async function postSuscripcionPaypal({
+  id,
+  paypalSubscriptionId,
+}: SuscripcionMPData) {
   try {
-    const res = await instance.post(`/suscripcion/paypal/${id}`);
+    const res = await instance.post(`/suscripcion/paypal/${id}`, {
+      paypalSubscriptionId,
+    });
 
     return res.data;
   } catch (error) {
@@ -40,6 +44,14 @@ export async function getSuscripcion() {
   }
 }
 
+export async function getSuscripcionID(id: string) {
+  try {
+    const res = await instance.get(`/suscripcion/activa/${id}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
 export async function getSuscripciones() {
   try {
     const res = await instance.get(`/suscripcion`);

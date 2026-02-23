@@ -1,27 +1,19 @@
 import CorreoNoVerificado from "@/app/components/CorreoNoVerificado";
 import { getPerfil } from "@/services/auth/auth.service";
 import {
-  postSuscripcion,
   postSuscripcionPaypal,
-  getSuscripcion, // 🟢 NUEVO: Deberás crear este servicio para consultar el estado
+  getSuscripcionID,
 } from "@/services/auth/suscripcion.service";
 import { User } from "@/interfaces/user.type";
 import { planes } from "@/utils/planes";
 import { Button } from "@heroui/react";
-import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoadingPay from "@/app/components/LoadingPay";
 import Loading from "@/app/components/Loading";
 
-// Importaciones de Mercado Pago (Quitamos StatusScreen porque es para pagos únicos)
-import { initMercadoPago, CardPayment } from "@mercadopago/sdk-react";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { handleAxiosError } from "@/utils/errorHandler";
-
-// Usa variables de entorno públicas en Next.js
-initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY || "TU_PUBLIC_KEY", {
-  locale: "es-PE",
-});
 
 export default function TuPedido() {
   const params = useParams();
@@ -30,9 +22,9 @@ export default function TuPedido() {
   const [loading, setLoading] = useState(true);
   const [loadingPay, setLoadingPay] = useState(false);
 
-  // 🟢 NUEVOS ESTADOS PARA EL POLLING (Validación con backend)
+  // Estados para el Polling
   const [esperandoCobro, setEsperandoCobro] = useState(false);
-  const [miSuscripcionId, setMiSuscripcionId] = useState<number | null>(null);
+  const [miSuscripcionId, setMiSuscripcionId] = useState<string | null>(null);
   const [pagoExitoso, setPagoExitoso] = useState(false);
 
   const productoFind = planes.find((p) => p.id === Number(id));
@@ -52,167 +44,50 @@ export default function TuPedido() {
     fetchPerfil();
   }, [id]);
 
-  // 🟢 LÓGICA DE VALIDACIÓN CONSTANTE (POLLING)
   useEffect(() => {
     let interval: NodeJS.Timeout;
 
     if (esperandoCobro && miSuscripcionId) {
-      // Preguntamos al backend cada 3 segundos
       interval = setInterval(async () => {
         try {
-          // Llama a tu endpoint (ejemplo: GET /suscripcion/estado/:id)
-          const res = await getSuscripcion();
-          const estado = res.estado; // 'pendiente', 'activa', 'cancelada'
+          const res = await getSuscripcionID(miSuscripcionId);
+          const estado = res.estado;
 
           if (estado === "activa") {
             clearInterval(interval);
             setEsperandoCobro(false);
-            setPagoExitoso(true); // ¡Se cobró! Mostramos la pantalla de éxito
+            setPagoExitoso(true);
           } else if (estado === "cancelada" || estado === "rechazada") {
             clearInterval(interval);
             setEsperandoCobro(false);
-
-            // Aquí el usuario se queda en el formulario para reintentar
+            alert(
+              "Hubo un problema con tu tarjeta. Por favor intenta de nuevo.",
+            );
           }
-          // Si sigue 'pendiente', no hacemos nada, el intervalo volverá a preguntar en 3s
         } catch (error) {
           console.error("Error consultando estado de suscripción", error);
         }
       }, 3000);
     }
 
-    return () => clearInterval(interval); // Limpiamos el intervalo si el componente se desmonta
+    return () => clearInterval(interval);
   }, [esperandoCobro, miSuscripcionId]);
-
-  const onSubmitMp = async (formData: any) => {
-    if (productoFind) {
-      setLoadingPay(true);
-      try {
-        const card_token_id = formData.token;
-        const payer_email = formData.payer.email || perfil?.correo;
-
-        // 1. Enviamos la tarjeta al backend
-        const res = await postSuscripcion(productoFind.id, {
-          reason: productoFind.nombre_plan,
-          payer_email: payer_email,
-          card_token_id: card_token_id,
-        });
-
-        // 2. Extraemos el ID de TU base de datos (No el de Mercado Pago)
-        // OJO: Asegúrate de que tu backend devuelve la suscripción creada. Ej: res.suscripcion.id
-        const idLocal = res?.suscripcion?.id || res?.data?.suscripcion?.id;
-
-        if (idLocal) {
-          setMiSuscripcionId(idLocal);
-          setEsperandoCobro(true); // 3. Activamos el Polling
-        } else {
-          // Fallback por si el backend no devuelve el ID local
-          window.location.href = "/compra-completada";
-        }
-      } catch (error) {
-        console.error("Error procesando pago con tarjeta:", error);
-      } finally {
-        setLoadingPay(false);
-      }
-    }
-  };
-
-  const fetchPaymentPaypal = async () => {
-    if (productoFind) {
-      setLoadingPay(true);
-      try {
-        const res = await postSuscripcionPaypal(productoFind.id);
-        window.location.href = res.link_pago;
-      } catch (error) {
-        console.error("Error cargando PayPal:", error);
-      } finally {
-        setLoadingPay(false);
-      }
-    }
-  };
-
-  const customizationMP = {
-    visual: {
-      style: {
-        theme: "default" as "default",
-        customVariables: {
-          formBackgroundColor: "transparent",
-          baseColor: "#fc68b9",
-          baseColorFirstVariant: "#fa89c7",
-          baseColorSecondVariant: "#e052a0",
-          textPrimaryColor: "#222D65",
-          textSecondaryColor: "#bbbbbb",
-          buttonTextColor: "#ffffff",
-          errorColor: "#ef4444",
-          successColor: "#10b981",
-          inputBackgroundColor: "#ffffff",
-          outlineSecondaryColor: "#e2e8f0",
-          outlinePrimaryColor: "#fc68b9",
-          inputBorderWidth: "1px",
-          inputFocusedBorderWidth: "1px",
-          inputFocusedBoxShadow: "0 0 0 3px rgba(252, 104, 185, 0.2)",
-          inputErrorFocusedBoxShadow: "0 0 0 3px rgba(239, 68, 68, 0.2)",
-          inputVerticalPadding: "12px",
-          inputHorizontalPadding: "12px",
-          formInputsTextTransform: "none",
-          fontSizeExtraSmall: "13px",
-          fontSizeSmall: "13px",
-          fontSizeMedium: "13px",
-          fontSizeLarge: "13px",
-          fontSizeExtraLarge: "13px",
-          fontWeightNormal: "500",
-          fontWeightSemiBold: "500",
-          borderRadiusSmall: "8px",
-          borderRadiusMedium: "8px",
-          borderRadiusLarge: "8px",
-          borderRadiusFull: "8px",
-          formPadding: "10px",
-        },
-      },
-      texts: {
-        formTitle: "Detalles de tu tarjeta",
-        emailSectionTitle: "Datos de contacto",
-        installmentsSectionTitle: "Opciones de pago",
-        cardholderName: {
-          label: "Nombre titular de la tarjeta",
-          placeholder: "Ej. Ana María Pérez",
-        },
-        email: {
-          label: "Correo electrónico",
-          placeholder: "tu@correo.com",
-        },
-        cardholderIdentification: {
-          label: "Documento de Identidad (DNI/CE)",
-        },
-        cardNumber: { label: "Número de la tarjeta" },
-        expirationDate: { label: "Vencimiento (MM/AA)" },
-        securityCode: { label: "Código CVV" },
-        selectInstallments: "Elige en cuántas cuotas pagar",
-        selectIssuerBank: "Selecciona tu banco emisor",
-        formSubmit: `Suscribirme por $${productoFind?.precio_plan.toFixed(2) || "0.00"}`,
-      },
-    },
-  };
-
-  const errorLog = (error: any) => {
-    console.log(error);
-  };
 
   if (loading) return <Loading />;
   if (perfil && perfil.emailVerified === false)
     return <CorreoNoVerificado perfil={perfil} />;
 
-  // 🟢 PANTALLA 1: ESTAMOS VALIDANDO EL PAGO (Polling activo)
+  // --- PANTALLAS DE ESTADO (Mantenemos tu diseño) ---
   if (esperandoCobro) {
     return (
-      <section className="w-1/2 min-w-[300px] h-full bg-white p-14 rounded-2xl flex flex-col items-center justify-center gap-6 max-sm:p-10 max-sm:w-full animate-fade-in text-center">
+      <section className="w-1/2 min-w-[300px] h-full bg-white p-14 rounded-2xl flex flex-col items-center justify-center gap-6 max-sm:p-10 max-sm:w-full animate-fade-in text-center shadow-lg">
         <div className="w-16 h-16 border-4 border-[#fc68b9] border-t-transparent rounded-full animate-spin mb-4"></div>
         <h2 className="text-2xl font-bold text-[#222D65]">
           Validando tu pago...
         </h2>
         <p className="text-[#8A8A8A]">
-          Estamos confirmando la transacción con tu banco. Por favor, no cierres
-          esta ventana.
+          Estamos confirmando la transacción de forma segura. Por favor, no
+          cierres esta ventana.
         </p>
       </section>
     );
@@ -220,7 +95,7 @@ export default function TuPedido() {
 
   if (pagoExitoso) {
     return (
-      <section className="w-1/2 min-w-[300px] h-full bg-white p-14 rounded-2xl flex flex-col items-center justify-center gap-6 max-sm:p-10 max-sm:w-full animate-fade-in text-center">
+      <section className="w-1/2 min-w-[300px] h-full bg-white p-14 rounded-2xl flex flex-col items-center justify-center gap-6 max-sm:p-10 max-sm:w-full animate-fade-in text-center shadow-lg">
         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4">
           <svg
             className="w-10 h-10 text-[#10b981]"
@@ -240,7 +115,7 @@ export default function TuPedido() {
           ¡Suscripción Exitosa!
         </h2>
         <p className="text-[#8A8A8A]">
-          Tu pago ha sido procesado correctamente y tu suscripción está activa.
+          Tu pago ha sido procesado correctamente y tu plan ya está activo.
         </p>
         <Button
           className="mt-6 w-full max-w-[300px] bg-white text-[#222D65] font-bold px-10 py-5 border-3 border-[#fa89c7] hover:bg-[#fc68b9] hover:text-white duration-500"
@@ -253,74 +128,185 @@ export default function TuPedido() {
     );
   }
 
-  // --- PANTALLA 3: RENDERIZADO NORMAL (FORMULARIO CHECKOUT) ---
+  // --- PANTALLA PRINCIPAL DE CHECKOUT ---
   return (
-    <section className="w-1/2 min-w-[300px] h-full bg-white p-14 rounded-2xl flex flex-col items-start gap-6 max-sm:p-10 max-sm:w-full overflow-y-auto">
+    <section className="w-1/2 min-w-[300px] h-full bg-white p-10 lg:p-14 rounded-3xl flex flex-col items-start gap-8 max-sm:w-full overflow-y-auto shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
       {loadingPay && <LoadingPay />}
-      <h1 className="text-2xl font-bold text-[#68E1E0]">Tu pedido</h1>
 
-      <ul className="w-full space-y-2">
-        <li className="text-[#8A8A8A] text-base font-semibold grid grid-cols-2 gap-10">
-          <p>Producto</p>
-          <p>{productoFind?.nombre_plan}</p>
-        </li>
-        <li className="text-[#8A8A8A] text-base font-semibold grid grid-cols-2 gap-10">
-          <p>Subtotal</p>
-          <p>${productoFind?.precio_plan.toFixed(2)}</p>
-        </li>
-        <li className="text-[#8A8A8A] text-base font-semibold grid grid-cols-2 gap-10">
-          <p>Total</p>
-          <p>${productoFind?.precio_plan.toFixed(2)}</p>
-        </li>
-      </ul>
+      {/* Cabecera y Resumen del Pedido */}
+      <div className="w-full">
+        <h1 className="text-3xl font-extrabold text-[#68E1E0] mb-6">
+          Resumen de tu pedido
+        </h1>
 
-      <p className="text-sm text-gray-600">
-        Tus datos personales se utilizarán para procesar tu pedido, mejorar tu
-        experiencia en esta web y otros propósito descritos en nuestra{" "}
-        <span className="text-[#fc68b9] hover:underline cursor-pointer">
+        <div className="bg-[#f8fafc] p-6 rounded-2xl border border-gray-100 w-full space-y-4">
+          <div className="flex justify-between items-center text-[#222D65] font-medium">
+            <p className="text-[#8A8A8A]">Plan Seleccionado</p>
+            <p className="font-bold">{productoFind?.nombre_plan}</p>
+          </div>
+          <div className="flex justify-between items-center text-[#222D65] font-medium">
+            <p className="text-[#8A8A8A]">Subtotal</p>
+            <p>${productoFind?.precio_plan.toFixed(2)}</p>
+          </div>
+          <div className="h-px w-full bg-gray-200 my-2"></div>
+          <div className="flex justify-between items-center text-[#222D65] text-lg font-bold">
+            <p>Total a pagar</p>
+            <p className="text-[#fc68b9]">
+              ${productoFind?.precio_plan.toFixed(2)} / mes
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <p className="text-xs text-gray-500 text-center w-full">
+        Tus datos se procesan de forma segura. Revisa nuestra{" "}
+        <span className="text-[#fc68b9] hover:underline cursor-pointer font-medium">
           política de privacidad
         </span>
+        .
       </p>
 
-      {/* LOGICA DE METODOS DE PAGO */}
-      <div className="w-full flex flex-col justify-center items-center gap-6">
-        {/* SOLO renderizamos el Brick si existe el producto, su precio es mayor a 0 y tenemos el correo */}
+      {/* 🟢 ZONA DE PAGOS (Estilizada para tu marca) */}
+      <div className="w-full">
+        <h3 className="text-lg font-bold text-[#222D65] mb-4">
+          Elige tu método de pago
+        </h3>
+
         {productoFind && productoFind.precio_plan > 0 ? (
-          <CardPayment
-            initialization={{
-              amount: productoFind.precio_plan,
+          <PayPalScriptProvider
+            options={{
+              clientId:
+                process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "TU_CLIENT_ID",
+              components: "buttons",
+              intent: "subscription",
+              vault: true,
+              locale: "es_PE", // Aseguramos que esté en español
             }}
-            customization={customizationMP}
-            onSubmit={onSubmitMp}
-            onReady={() => console.log("Formulario de tarjeta listo")}
-            onError={(error) => errorLog(error)}
-          />
+          >
+            <div className="flex flex-col gap-6 w-full">
+              {/* Contenedor de Tarjeta de Débito/Crédito */}
+              <div className="relative border-2 border-[#fa89c7] bg-white rounded-2xl p-6 pb-0 shadow-[0_4px_14px_0_rgba(252,104,185,0.15)] transition-all hover:border-[#fc68b9]">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="bg-[#fc68b9] p-2 rounded-lg">
+                    <svg
+                      className="w-5 h-5 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                      />
+                    </svg>
+                  </div>
+                  <h4 className="font-bold text-[#222D65]">
+                    Tarjeta de Crédito / Débito
+                  </h4>
+                </div>
+
+                <div className="min-h-[100px]">
+                  {" "}
+                  {/* Altura mínima para evitar saltos al cargar */}
+                  <PayPalButtons
+                    fundingSource="card"
+                    style={{
+                      shape: "rect",
+                      color: "black", // El botón principal se verá oscuro, contrastando bien
+                      layout: "vertical",
+                    }}
+                    createSubscription={(data, actions) => {
+                      return actions.subscription.create({
+                        plan_id: "P-7NP429606R1731646NFZEWGY",
+                      });
+                    }}
+                    onApprove={async (data, actions) => {
+                      setLoadingPay(true);
+                      try {
+                        await postSuscripcionPaypal({
+                          id: productoFind.id,
+                          paypalSubscriptionId: data.subscriptionID || "",
+                        });
+                        setMiSuscripcionId(data.subscriptionID || "");
+                        setEsperandoCobro(true);
+                      } catch (error) {
+                        console.error("Error guardando suscripción:", error);
+                      } finally {
+                        setLoadingPay(false);
+                      }
+                    }}
+                    onError={(err) => console.error("Error en PayPal:", err)}
+                  />
+                </div>
+              </div>
+
+              {/* Separador */}
+              <div className="flex items-center w-full gap-4 px-2">
+                <div className="h-px bg-gray-200 flex-1"></div>
+                <span className="text-xs text-gray-400 font-bold uppercase tracking-wider">
+                  O paga con
+                </span>
+                <div className="h-px bg-gray-200 flex-1"></div>
+              </div>
+
+              {/* Contenedor de Cuenta PayPal */}
+              <div className="border border-gray-200 bg-gray-50 rounded-2xl p-6 transition-all hover:border-gray-300">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="bg-[#003087] p-2 rounded-lg">
+                    {" "}
+                    {/* Color corporativo de PayPal */}
+                    <svg
+                      className="w-5 h-5 text-white"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.982 5.05-4.348 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106h4.606a.641.641 0 0 0 .633-.74l.526-3.353c.082-.519.53-1.011 1.054-1.011h.976c4.298 0 7.664-1.748 8.646-6.797.124-.637.194-1.25.187-1.831-.035-.27-.123-.52-.273-.784z" />
+                    </svg>
+                  </div>
+                  <h4 className="font-bold text-[#222D65]">Cuenta PayPal</h4>
+                </div>
+
+                <PayPalButtons
+                  fundingSource="paypal"
+                  style={{
+                    shape: "rect",
+                    color: "gold",
+                    layout: "vertical",
+                    height: 48, // Botón más alto para que luzca mejor
+                  }}
+                  createSubscription={(data, actions) => {
+                    return actions.subscription.create({
+                      plan_id: "P-7NP429606R1731646NFZEWGY",
+                    });
+                  }}
+                  onApprove={async (data, actions) => {
+                    setLoadingPay(true);
+                    try {
+                      await postSuscripcionPaypal({
+                        id: productoFind.id,
+                        paypalSubscriptionId: data.subscriptionID || "",
+                      });
+                      setMiSuscripcionId(data.subscriptionID || "");
+                      setEsperandoCobro(true);
+                    } catch (error) {
+                      console.error(error);
+                    } finally {
+                      setLoadingPay(false);
+                    }
+                  }}
+                />
+              </div>
+            </div>
+          </PayPalScriptProvider>
         ) : (
-          <div className="w-full text-center py-10 text-gray-500">
-            Cargando pasarela de pago segura...
+          <div className="w-full text-center py-10 text-gray-500 bg-gray-50 rounded-xl">
+            Cargando entorno de pago seguro...
           </div>
         )}
-
-        <div className="flex items-center w-full gap-4">
-          <div className="h-px bg-gray-200 flex-1"></div>
-          <span className="text-sm text-gray-400 font-medium">O usa</span>
-          <div className="h-px bg-gray-200 flex-1"></div>
-        </div>
-
-        <Button
-          className="w-full max-w-[320px] bg-white text-[#222D65] text-md font-bold px-10 py-5 border-3 border-[#fa89c7] hover:bg-[#fc68b9] hover:border-[#fc68b9] hover:text-white shadow-rigth-yellow duration-500 flex items-center justify-center gap-3"
-          radius="full"
-          onPress={fetchPaymentPaypal}
-        >
-          <span>Suscríbete con</span>
-          <Image
-            src="/icons/paypal.svg"
-            alt="PayPal Logo"
-            width={80}
-            height={24}
-            className="object-contain"
-          />
-        </Button>
       </div>
     </section>
   );
