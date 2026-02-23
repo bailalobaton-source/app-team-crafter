@@ -71,9 +71,7 @@ export default function TuPedido() {
           } else if (estado === "cancelada" || estado === "rechazada") {
             clearInterval(interval);
             setEsperandoCobro(false);
-            alert(
-              "El pago fue rechazado por el banco. Intenta con otra tarjeta.",
-            );
+
             // Aquí el usuario se queda en el formulario para reintentar
           }
           // Si sigue 'pendiente', no hacemos nada, el intervalo volverá a preguntar en 3s
@@ -196,6 +194,10 @@ export default function TuPedido() {
     },
   };
 
+  const errorLog = (error: any) => {
+    console.log(error);
+  };
+
   if (loading) return <Loading />;
   if (perfil && perfil.emailVerified === false)
     return <CorreoNoVerificado perfil={perfil} />;
@@ -216,7 +218,6 @@ export default function TuPedido() {
     );
   }
 
-  // 🟢 PANTALLA 2: EL WEBHOOK CONFIRMÓ EL COBRO (Éxito)
   if (pagoExitoso) {
     return (
       <section className="w-1/2 min-w-[300px] h-full bg-white p-14 rounded-2xl flex flex-col items-center justify-center gap-6 max-sm:p-10 max-sm:w-full animate-fade-in text-center">
@@ -283,18 +284,22 @@ export default function TuPedido() {
 
       {/* LOGICA DE METODOS DE PAGO */}
       <div className="w-full flex flex-col justify-center items-center gap-6">
-        <CardPayment
-          initialization={{
-            amount: productoFind?.precio_plan || 0,
-            payer: {
-              email: perfil?.correo || "",
-            },
-          }}
-          customization={customizationMP}
-          onSubmit={onSubmitMp}
-          onReady={() => console.log("Formulario de tarjeta listo")}
-          onError={(error) => console?.error("Error en MP:", error)}
-        />
+        {/* SOLO renderizamos el Brick si existe el producto, su precio es mayor a 0 y tenemos el correo */}
+        {productoFind && productoFind.precio_plan > 0 ? (
+          <CardPayment
+            initialization={{
+              amount: productoFind.precio_plan,
+            }}
+            customization={customizationMP}
+            onSubmit={onSubmitMp}
+            onReady={() => console.log("Formulario de tarjeta listo")}
+            onError={(error) => errorLog(error)}
+          />
+        ) : (
+          <div className="w-full text-center py-10 text-gray-500">
+            Cargando pasarela de pago segura...
+          </div>
+        )}
 
         <div className="flex items-center w-full gap-4">
           <div className="h-px bg-gray-200 flex-1"></div>
