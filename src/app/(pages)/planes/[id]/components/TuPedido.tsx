@@ -2,18 +2,19 @@ import CorreoNoVerificado from "@/app/components/CorreoNoVerificado";
 import { getPerfil } from "@/services/auth/auth.service";
 import {
   postSuscripcionPaypal,
-  getSuscripcionID,
+  getSuscripcion,
 } from "@/services/auth/suscripcion.service";
 import { User } from "@/interfaces/user.type";
 import { planes } from "@/utils/planes";
 import { Button } from "@heroui/react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoadingPay from "@/app/components/LoadingPay";
 import Loading from "@/app/components/Loading";
 
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { handleAxiosError } from "@/utils/errorHandler";
+import { toast } from "sonner";
 
 export default function TuPedido() {
   const params = useParams();
@@ -21,6 +22,7 @@ export default function TuPedido() {
   const [perfil, setPerfil] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadingPay, setLoadingPay] = useState(false);
+  const router = useRouter();
 
   // Estados para el Polling
   const [esperandoCobro, setEsperandoCobro] = useState(false);
@@ -50,17 +52,20 @@ export default function TuPedido() {
     if (esperandoCobro && miSuscripcionId) {
       interval = setInterval(async () => {
         try {
-          const res = await getSuscripcionID(miSuscripcionId);
+          const res = await getSuscripcion();
           const estado = res.estado;
+
+          console.log(res);
 
           if (estado === "activa") {
             clearInterval(interval);
             setEsperandoCobro(false);
             setPagoExitoso(true);
-          } else if (estado === "cancelada" || estado === "rechazada") {
+            router.push("/compra-completada");
+          } else {
             clearInterval(interval);
             setEsperandoCobro(false);
-            alert(
+            toast.error(
               "Hubo un problema con tu tarjeta. Por favor intenta de nuevo.",
             );
           }
@@ -130,7 +135,7 @@ export default function TuPedido() {
 
   // --- PANTALLA PRINCIPAL DE CHECKOUT ---
   return (
-    <section className="w-1/2 min-w-[300px] h-full bg-white p-10 lg:p-14 rounded-3xl flex flex-col items-start gap-8 max-sm:w-full overflow-y-auto shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+    <section className=" w-full lg:w-1/2 min-w-[300px] lg:h-full h-auto lg:overflow-y-auto bg-white p-6 lg:p-14 rounded-3xl flex flex-col items-start gap-8 max-sm:w-full shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
       {loadingPay && <LoadingPay />}
 
       {/* Cabecera y Resumen del Pedido */}
@@ -183,7 +188,7 @@ export default function TuPedido() {
               locale: "es_PE", // Aseguramos que esté en español
             }}
           >
-            <div className="flex flex-col gap-6 w-full">
+            <div className=" mx-auto flex flex-col gap-6 w-full ">
               {/* Contenedor de Tarjeta de Débito/Crédito */}
               <div className="relative border-2 border-[#fa89c7] bg-white rounded-2xl p-6 pb-0 shadow-[0_4px_14px_0_rgba(252,104,185,0.15)] transition-all hover:border-[#fc68b9]">
                 <div className="flex items-center gap-3 mb-4">
@@ -215,12 +220,14 @@ export default function TuPedido() {
                     fundingSource="card"
                     style={{
                       shape: "rect",
-                      color: "black", // El botón principal se verá oscuro, contrastando bien
+                      color: "black",
                       layout: "vertical",
+                      height: 45,
+                      borderRadius: 10,
                     }}
                     createSubscription={(data, actions) => {
                       return actions.subscription.create({
-                        plan_id: "P-7NP429606R1731646NFZEWGY",
+                        plan_id: productoFind.paypal_id,
                       });
                     }}
                     onApprove={async (data, actions) => {
@@ -276,11 +283,12 @@ export default function TuPedido() {
                     shape: "rect",
                     color: "gold",
                     layout: "vertical",
-                    height: 48, // Botón más alto para que luzca mejor
+                    height: 45,
+                    borderRadius: 10,
                   }}
                   createSubscription={(data, actions) => {
                     return actions.subscription.create({
-                      plan_id: "P-7NP429606R1731646NFZEWGY",
+                      plan_id: productoFind.paypal_id,
                     });
                   }}
                   onApprove={async (data, actions) => {

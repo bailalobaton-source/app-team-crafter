@@ -11,7 +11,7 @@ export const planes = [
     color_principal: "#FFE251",
     color_text: "#8A8A8A",
     ruta_img: "/planes/planB.png",
-    flow_plan_id: "plan_basico",
+    paypal_id: "P-3U578176AR727953NNGSZ7XA",
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ export const planes = [
     color_principal: "#68E1E0",
     color_text: "#8A8A8A",
     ruta_img: "/planes/planE.png",
-    flow_plan_id: "plan_estandar",
+    paypal_id: "P-3U578176AR727953NNGSZ7XA",
   },
   {
     id: 3,
@@ -39,6 +39,6 @@ export const planes = [
     color_principal: "#FC68B9",
     color_text: "#ffffff",
     ruta_img: "/planes/planPro.png",
-    flow_plan_id: "plan_pro",
+    paypal_id: "P-3U578176AR727953NNGSZ7XA",
   },
 ];

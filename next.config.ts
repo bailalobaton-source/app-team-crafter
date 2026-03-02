@@ -4,12 +4,7 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   reactStrictMode: false,
   images: {
-    domains: [
-      "end-point.team-crafter.com",
-      "localhost",
-      "www.paypalobjects.com",
-      "files.team-crafter.com",
-    ],
+    domains: ["localhost", "www.paypalobjects.com", "files.team-crafter.com"],
   },
 };
 

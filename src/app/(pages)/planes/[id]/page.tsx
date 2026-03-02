@@ -10,8 +10,11 @@ export default function PlanId() {
   const { suscripcion } = useSuscripcionStore();
 
   return (
-    <main className="relative w-full min-h-screen h-full p-10 py-14  flex gap-8 background-login max-sm:px-4">
-      <Link href="/planes" className=" absolute left-10 top-10 z-10">
+    <main className="relative w-full min-h-screen h-full p-10 py-10  flex gap-8 background-login max-sm:px-4">
+      <Link
+        href="/planes"
+        className=" absolute left-2 top-4 lg:left-10 lg:top-10 z-10"
+      >
         <Button
           className="bg-[#FC68B9] text-white font-bold rounded-full"
           startContent={
@@ -42,7 +45,7 @@ export default function PlanId() {
           Regresar
         </Button>
       </Link>
-      <div className="w-full  h-full max-w-[1440px] mx-auto flex   overflow-hidden max-sm:p-0 max-sm:flex-col-reverse">
+      <div className="w-full  h-full max-w-[1440px] mx-auto flex   overflow-x-hidden overflow-y-auto max-sm:p-0 max-sm:flex-col-reverse">
         <PsAi />
         {suscripcion ? (
           <section
