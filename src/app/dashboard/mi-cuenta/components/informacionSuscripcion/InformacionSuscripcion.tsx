@@ -1,6 +1,5 @@
 "use client";
 
-import { DatosCliente } from "@/interfaces/user.type";
 import { getSuscripciones } from "@/services/auth/suscripcion.service";
 import useSuscripcionStore, { Suscripcion } from "@/stores/SuscripcionContext";
 import { handleAxiosError } from "@/utils/errorHandler";

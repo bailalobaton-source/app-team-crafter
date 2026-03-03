@@ -8,6 +8,5 @@ export interface Plan {
   color_principal: string;
   color_text: string;
   ruta_img: string;
-  flow_plan_id: string;
-  paypal_plan_id?: string;
+  paypal_id?: string;
 }
