@@ -32,7 +32,7 @@ export default function PlanId() {
       >
         <PsAi />
 
-        {!suscripcion ? (
+        {suscripcion ? (
           <section className="m-auto w-1/2 min-w-[300px] h-full bg-white rounded-2xl p-10 flex flex-col justify-center items-start gap-14 max-sm:w-full">
             <h1 className="text-xl font-bold text-[#68E1E0] text-center">
               Ya cuenta con una suscripcion activa
