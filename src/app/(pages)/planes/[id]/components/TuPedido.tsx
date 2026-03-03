@@ -53,9 +53,7 @@ export default function TuPedido() {
       interval = setInterval(async () => {
         try {
           const res = await getSuscripcion();
-          const estado = res.estado;
-
-          console.log(res);
+          const estado = res.suscripcionActiva.status;
 
           if (estado === "activa") {
             clearInterval(interval);
