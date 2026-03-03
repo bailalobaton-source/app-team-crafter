@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function PsAi() {
   return (
-    <section className=" relative w-1/2  h-full   max-md:w-full min-h-[70vh] overflow-hidden ">
+    <section className=" relative w-1/2  h-full   max-md:w-full min-h-[70vh] overflow-hidden  max-sm:hidden">
       <div
         className={`fixed w-1/2 pr-4  h-full top-0   left-0  flex flex-col items-center justify-center  max-md:relative max-md:w-full`}
       >

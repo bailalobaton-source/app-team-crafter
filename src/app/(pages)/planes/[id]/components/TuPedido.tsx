@@ -133,7 +133,7 @@ export default function TuPedido() {
 
   // --- PANTALLA PRINCIPAL DE CHECKOUT ---
   return (
-    <section className=" w-full lg:w-1/2 min-w-[300px] lg:h-full h-auto lg:overflow-y-auto bg-white p-6 lg:p-14 rounded-3xl flex flex-col items-start gap-8 max-sm:w-full shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+    <section className=" w-full overflow-hidden lg:w-1/2 min-w-[300px] min-h-full h-auto  bg-white p-6 lg:p-14 rounded-3xl flex flex-col items-start gap-8 max-sm:w-full shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
       {loadingPay && <LoadingPay />}
 
       {/* Cabecera y Resumen del Pedido */}
