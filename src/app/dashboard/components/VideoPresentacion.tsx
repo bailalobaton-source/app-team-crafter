@@ -51,36 +51,15 @@ export default function VideoPresentacion({ onOpenChange, isOpen }: Props) {
         {/* Botón X para cerrar */}
         <button
           onClick={() => handleClose(false)}
-          className="absolute top-2 right-2 z-20 bg-[#FC68B9] rounded-full p-0 hover:scale-110 transition-transform cursor-pointer duration-300"
+          className=" absolute top-2 right-2 z-50 bg-[#FC68B9] rounded-full p-0 hover:scale-110 transition-transform cursor-pointer duration-300"
         >
-          <IoClose className="text-3xl text-white" />
+          <IoClose className="text-4xl text-white" />
         </button>
 
         <article
           className="w-full max-w-[800px] relative rounded-2xl overflow-hidden flex items-center justify-center cursor-pointer"
           onClick={handlePlayVideo}
         >
-          {/* Poster con play */}
-          {/* <button
-            className={`w-14 absolute z-10 transition-all duration-300 ease-in-out transform hover:scale-110 cursor-pointer ${
-              isAnimating
-                ? "opacity-0 scale-150"
-                : isPlaying
-                ? "opacity-0 scale-150 pointer-events-none"
-                : "opacity-100 scale-100"
-            }`}
-            onClick={handlePlayVideo}
-            disabled={isAnimating || isPlaying}
-          >
-            <Image
-              src={"/icons/playVideo.svg"}
-              alt="reproducir"
-              width={100}
-              height={100}
-            />
-          </button> */}
-
-          {/* Video en reproducción */}
           <div
             className={`w-full inset-0 transition-all duration-500 ease-in-out `}
           >
