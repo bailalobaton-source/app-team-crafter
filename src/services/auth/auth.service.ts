@@ -25,9 +25,9 @@ export async function postSignup(data: Signup, plan: string | null) {
   }
 }
 
-export async function getPerfilRegistrarTarjeta() {
+export async function getPerfilRegistrarTarjeta(id: string) {
   try {
-    const res = await instance.get(`/user/registrar-tarjeta`);
+    const res = await instance.get(`/user/registrar-tarjeta?plan=${id}`);
     return res.data;
   } catch (error) {
     throw error;
