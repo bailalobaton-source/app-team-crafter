@@ -64,7 +64,8 @@ export const faqs = {
     {
       id: 11,
       titulo: "¿Puedo cancelar mi suscripción?",
-      contenido: `Sí, puedes cancelar tu suscripción en cualquier momento. Inicia sesión en tu perfil, luego en opciones encontrarás "Mi suscripción", finalmente selecciona "cancelar suscripción" y ¡listo! Ten en cuenta que después de la anulación continuarás con tus beneficios hasta el vencimiento de tu periodo.`,
+      contenido:
+        "Sí, puedes cancelar tu suscripción en cualquier momento. Para hacerlo, inicia sesión en tu perfil, dirígete a Mi Cuenta, luego a Membresía y selecciona Cancelar membresía. Ten en cuenta que una vez confirmada la cancelación, el acceso a los beneficios y contenidos de la plataforma se suspenderá de forma inmediata, independientemente del tiempo restante de tu periodo de suscripción.",
     },
   ],
 
@@ -133,7 +134,8 @@ export const faqs = {
     {
       id: 11,
       titulo: "Can I cancel my subscription?",
-      contenido: `Yes, you can cancel your subscription anytime. Log into your profile, go to “My Subscription,” and select “Cancel Subscription.” After canceling, you’ll continue enjoying your benefits until your current period expires.`,
+      contenido:
+        "Yes, you can cancel your subscription at any time. To do so, log in to your profile, go to My Account, then Membership, and select Cancel membership. Please note that once the cancellation is confirmed, access to the platform's benefits and content will be suspended immediately, regardless of the time remaining in your subscription period.",
     },
   ],
 };
