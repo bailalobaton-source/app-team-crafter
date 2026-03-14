@@ -53,7 +53,7 @@ export default function TuPedido() {
       setLoadingPay(true);
       const res = await getPerfilRegistrarTarjeta(productoFind?.id_flow || "");
       if (res && res.url) {
-        window.open(res.url, "_blank");
+        window.location.replace(res.url);
       }
     } catch (error) {
       handleAxiosError(error);
@@ -199,13 +199,13 @@ export default function TuPedido() {
         <button
           onClick={handleSubmitTarjeta}
           disabled={loadingPay}
-          className="w-full cursor-pointer bg-white border border-gray-200 hover:border-[#fc68b9] text-[#222D65] font-semibold py-4 px-6 rounded-xl transition-all duration-300 flex items-center shadow-sm hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed group mb-5"
+          className="w-full cursor-pointer bg-[#fc68b9] border border-gray-200 hover:border-[#fc68b9] text-[#ffff] font-semibold py-4 px-6 rounded-xl transition-all duration-300 flex items-center shadow-sm hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed group mb-5"
         >
           {loadingPay ? (
             <div className="w-5 h-5 border-2 border-[#fc68b9] border-t-transparent rounded-full animate-spin mr-3"></div>
           ) : (
             <svg
-              className="w-6 h-6 mr-3 text-gray-400 group-hover:text-[#fc68b9] transition-colors"
+              className="w-6 h-6 mr-3 text-white group-hover:text-[#ffff] transition-colors"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
