@@ -135,7 +135,7 @@ export default function DatosCompra() {
 
         <div className="flex flex-col sm:flex-row gap-4 w-full justify-center mt-4">
           <Link
-            href="mailto:soporte@tuempresa.com"
+            href="https://api.whatsapp.com/send/?phone=51994757941&text&type=phone_number&app_absent=0"
             className="w-full sm:w-auto bg-[#222D65] text-white text-base font-semibold px-8 py-4 rounded-xl hover:bg-[#1a224f] hover:shadow-lg transition-all duration-300"
           >
             {t.contactSupport}
