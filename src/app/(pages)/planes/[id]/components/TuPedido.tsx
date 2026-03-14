@@ -53,7 +53,7 @@ export default function TuPedido() {
       setLoadingPay(true);
       const res = await getPerfilRegistrarTarjeta(productoFind?.id_flow || "");
       if (res && res.url) {
-        window.open(res.url);
+        window.open(res.url, "_blank");
       }
     } catch (error) {
       handleAxiosError(error);
@@ -102,6 +102,7 @@ export default function TuPedido() {
   if (perfil && perfil.emailVerified === false)
     return <CorreoNoVerificado perfil={perfil} />;
 
+  // --- PANTALLAS DE CARGA Y ÉXITO ---
   if (esperandoCobro) {
     return (
       <section className="w-1/2 min-w-[300px] h-full bg-white p-14 rounded-2xl flex flex-col items-center justify-center gap-6 max-sm:p-10 max-sm:w-full animate-fade-in text-center shadow-lg">
@@ -150,11 +151,18 @@ export default function TuPedido() {
     );
   }
 
+  // --- PANTALLA DE CHECKOUT PRINCIPAL ---
   return (
-    <section className="w-full overflow-hidden lg:w-1/2 min-w-[300px] min-h-full h-auto bg-white p-6 lg:p-14 rounded-3xl flex flex-col items-start gap-8 max-sm:w-full shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-      {loadingPay && <LoadingPay />}
+    <section className="relative w-full overflow-hidden lg:w-1/2 min-w-[300px] min-h-full h-auto bg-white p-6 lg:p-14 rounded-3xl flex flex-col items-start gap-8 max-sm:w-full shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+      {/* 🟢 CAPA DE LOADING AISLADA Y SUPERPUESTA PANTALLA COMPLETA */}
+      {loadingPay && (
+        <div className="fixed inset-0 z-[9999] w-screen h-[100dvh] backdrop-blur-sm flex items-center justify-center">
+          <LoadingPay />
+        </div>
+      )}
 
-      <div className="w-full">
+      {/* CABECERA */}
+      <div className="w-full relative z-10">
         <h1 className="text-3xl font-extrabold text-[#68E1E0] mb-6">
           Resumen de tu pedido
         </h1>
@@ -177,8 +185,12 @@ export default function TuPedido() {
         </div>
       </div>
 
-      {/* 🟢 ZONA DE PAGOS REDISEÑADA */}
-      <div className="w-full">
+      {/* 🟢 ZONA DE PAGOS */}
+      <div
+        className={`w-full relative transition-opacity duration-300 ${
+          loadingPay ? "opacity-0 pointer-events-none z-0" : "opacity-100 z-10"
+        }`}
+      >
         <h3 className="text-xl font-bold text-[#222D65] mb-6">
           Método de pago
         </h3>
@@ -209,7 +221,7 @@ export default function TuPedido() {
           <span>Tarjeta de Crédito o Débito</span>
         </button>
 
-        {/* Separador "O" elegante */}
+        {/* Separador "O" */}
         <div className="flex items-center my-6">
           <div className="h-px bg-gray-100 flex-1"></div>
           <span className="px-4 text-xs text-gray-400 font-bold uppercase tracking-wider">
@@ -237,9 +249,9 @@ export default function TuPedido() {
                   shape: "rect",
                   color: "gold",
                   layout: "vertical",
-                  height: 50, // Ligeramente más alto
+                  height: 50,
                   borderRadius: 10,
-                  label: "subscribe", // Cambiamos etiqueta a "Suscribirse"
+                  label: "subscribe",
                 }}
                 createSubscription={(data, actions) => {
                   return actions.subscription.create({
@@ -265,8 +277,12 @@ export default function TuPedido() {
             </PayPalScriptProvider>
           </div>
         ) : (
-          <div className="w-full text-center py-10 text-gray-400 bg-gray-50 rounded-xl border border-gray-100 text-sm">
-            Cargando entorno de pago seguro...
+          // 🟢 LOADER DE PAYPAL EN PANTALLA COMPLETA
+          <div className="fixed inset-0 z-[9999] w-screen h-[100dvh] bg-white/70 backdrop-blur-sm flex flex-col items-center justify-center">
+            <div className="w-12 h-12 border-4 border-[#fc68b9] border-t-transparent rounded-full animate-spin mb-4"></div>
+            <span className="text-[#222D65] font-bold text-lg">
+              Cargando entorno de pago seguro...
+            </span>
           </div>
         )}
 
