@@ -2,9 +2,11 @@
 
 import { usePerfilStore } from "@/stores/perfil.store";
 import useSuscripcionStore from "@/stores/SuscripcionContext";
+import { useLanguageStore } from "@/stores/useLanguage.store";
 import { useVideoStore } from "@/stores/videoPresentacion.store";
 import { removeToken } from "@/utils/authUtils";
 import {
+  Button,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -15,6 +17,7 @@ import Link from "next/link";
 import { RiArrowDownSLine } from "react-icons/ri";
 
 export default function HeaderPlanes() {
+  const { language, toggleLanguage } = useLanguageStore();
   const clear = useVideoStore((state) => state.clear);
   const perfil = usePerfilStore((state) => state.perfil);
   const { suscripcion } = useSuscripcionStore();
@@ -24,6 +27,31 @@ export default function HeaderPlanes() {
     clear();
     window.location.reload();
   };
+  const t = {
+    es: {
+      searchPlaceholder: "Buscar clases...",
+      myAccount: "Mi cuenta",
+      favorites: "Favoritos",
+      logout: "Cerrar sesión",
+      english: "Inglés",
+      spanish: "Español",
+      showingResults: "Mostrando",
+      results: "resultados",
+      notifications: "Notificaciones",
+    },
+    en: {
+      searchPlaceholder: "Search classes...",
+      myAccount: "My account",
+      favorites: "Favorites",
+      logout: "Log out",
+      english: "English",
+      spanish: "Spanish",
+      showingResults: "Showing",
+      results: "results",
+      notifications: "Notifications",
+    },
+  }[language];
+
   return (
     <header className=" w-screen h-[80px] px-20 bg-[#fc68b9] flex items-center justify-between max-sm:px-4">
       <Link href={"/dashboard/inicio"}>
@@ -120,6 +148,28 @@ export default function HeaderPlanes() {
                 </Link>
               </DropdownItem>
             )}
+            <DropdownItem
+              key="Idiomas"
+              className="px-4 py-1 data-[hover=true]:bg-transparent rounded-lg mx-2 my-1 transition-all duration-200"
+            >
+              <Button
+                className="w-full bg-[#FC68B9] text-white font-semibold gap-2"
+                radius="full"
+                onPress={toggleLanguage}
+              >
+                <Image
+                  src={
+                    language === "es"
+                      ? "/icons/ingles.svg"
+                      : "/icons/spanish.svg"
+                  }
+                  alt="Idioma"
+                  width={30}
+                  height={30}
+                />
+                <p>{language === "es" ? t.english : t.spanish}</p>
+              </Button>
+            </DropdownItem>
 
             <DropdownItem
               key="cerrar-sesion"
