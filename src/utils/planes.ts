@@ -1,9 +1,9 @@
 export const planes = [
   {
     id: 4,
-    id_flow: "plan_prueba",
+    id_flow: "plan_basico_1",
     nombre_plan: "Plan Básico",
-    precio_plan: 1,
+    precio_plan: 5.5,
     precio_plan_soles: 3.6,
     titulo: " Paga por 1 mes",
     descripcion: "*30 días de contenido exclusivo",
@@ -11,11 +11,11 @@ export const planes = [
     color_principal: "#FFE251",
     color_text: "#8A8A8A",
     ruta_img: "/planes/planB.png",
-    paypal_id: "P-3U578176AR727953NNGSZ7XA",
+    paypal_id: "P-92B10688KV6632641NGSZ7MI",
   },
   {
     id: 2,
-    id_flow: "plan_prueba",
+    id_flow: "plan_estandar",
     nombre_plan: "Plan Estándar",
     precio_plan: 27,
     precio_plan_soles: 99,
@@ -25,11 +25,11 @@ export const planes = [
     color_principal: "#68E1E0",
     color_text: "#8A8A8A",
     ruta_img: "/planes/planE.png",
-    paypal_id: "P-3U578176AR727953NNGSZ7XA",
+    paypal_id: "P-2RN353779W911333LNGSZ6SA",
   },
   {
     id: 3,
-    id_flow: "plan_prueba",
+    id_flow: "plan_pro",
     nombre_plan: "Plan Pro Crafter",
     precio_plan: 55,
     precio_plan_soles: 192,
@@ -39,6 +39,6 @@ export const planes = [
     color_principal: "#FC68B9",
     color_text: "#ffffff",
     ruta_img: "/planes/planPro.png",
-    paypal_id: "P-3U578176AR727953NNGSZ7XA",
+    paypal_id: "P-88K796987D304553GNGSZ7FA",
   },
 ];
