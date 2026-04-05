@@ -1,6 +1,6 @@
 export const planes = [
   {
-    id: 4,
+    id: 1,
     id_flow: "plan_basico_1",
     nombre_plan: "Plan Básico",
     precio_plan: 5.5,
