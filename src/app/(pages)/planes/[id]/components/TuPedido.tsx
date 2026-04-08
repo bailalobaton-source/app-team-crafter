@@ -38,7 +38,7 @@ export default function TuPedido() {
     const fetchPerfil = async () => {
       try {
         const res = await getPerfil();
-        setPerfil(res.perfil);
+        setPerfil(res);
       } catch (error) {
         handleAxiosError(error);
       } finally {
@@ -232,7 +232,7 @@ export default function TuPedido() {
         </div>
 
         {/* 2. Contenedor de PayPal Estilizado */}
-        {productoFind && productoFind.precio_plan > 0 ? (
+        {productoFind && perfil?.id && productoFind.precio_plan > 0 ? (
           <div className="p-1 border border-gray-100 rounded-xl bg-[#fcfcfd]">
             <PayPalScriptProvider
               options={{
@@ -257,7 +257,7 @@ export default function TuPedido() {
                 createSubscription={(data, actions) => {
                   return actions.subscription.create({
                     plan_id: productoFind.paypal_id,
-                    custom_id: perfil?.id?.toString(),
+                    custom_id: perfil?.id?.toString(), // Asegúrate de enviarlo como string
                   });
                 }}
                 onApprove={async (data, actions) => {
