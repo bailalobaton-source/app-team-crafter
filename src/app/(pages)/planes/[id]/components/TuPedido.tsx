@@ -257,6 +257,7 @@ export default function TuPedido() {
                 createSubscription={(data, actions) => {
                   return actions.subscription.create({
                     plan_id: productoFind.paypal_id,
+                    custom_id: perfil?.id?.toString(),
                   });
                 }}
                 onApprove={async (data, actions) => {
