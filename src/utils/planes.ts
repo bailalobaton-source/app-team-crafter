@@ -12,6 +12,7 @@ export const planes = [
     color_text: "#8A8A8A",
     ruta_img: "/planes/planB.png",
     paypal_id: "P-92B10688KV6632641NGSZ7MI",
+    duracion_plan: "1 mes",
   },
   {
     id: 2,
@@ -26,6 +27,7 @@ export const planes = [
     color_text: "#8A8A8A",
     ruta_img: "/planes/planE.png",
     paypal_id: "P-2RN353779W911333LNGSZ6SA",
+    duracion_plan: "6 meses",
   },
   {
     id: 3,
@@ -40,5 +42,6 @@ export const planes = [
     color_text: "#ffffff",
     ruta_img: "/planes/planPro.png",
     paypal_id: "P-88K796987D304553GNGSZ7FA",
+    duracion_plan: "1 año",
   },
 ];

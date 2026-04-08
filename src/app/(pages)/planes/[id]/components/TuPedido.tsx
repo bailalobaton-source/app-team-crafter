@@ -179,7 +179,8 @@ export default function TuPedido() {
           <div className="flex justify-between items-center text-[#222D65] text-lg font-bold">
             <p>Total a pagar</p>
             <p className="text-[#fc68b9]">
-              ${productoFind?.precio_plan.toFixed(2)} / mes
+              ${productoFind?.precio_plan.toFixed(2)} /
+              {productoFind?.duracion_plan}
             </p>
           </div>
         </div>
