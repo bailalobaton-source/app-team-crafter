@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import Menu from "./components/Menu";
 import Footer from "./components/Footer";
 import SuscripcionVencida from "./components/SuacripcionVencida";
+import UsuarioBloqueado from "./components/UsuarioBloqueado"; // <-- IMPORTACIÓN NECESARIA
 import useSuscripcionStore, {
   useAutoRefetch,
 } from "@/stores/SuscripcionContext";
@@ -27,6 +28,7 @@ export default function DashboardLayout({
 }) {
   const { suscripcion, isLoading, isInitialLoading } = useSuscripcionStore();
   const { onOpen, onOpenChange } = useDisclosure();
+  const perfil = usePerfilStore((state) => state.perfil);
 
   // ✅ Store del video
   const hasWatchedVideo = useVideoStore((s) => s.hasWatchedVideo);
@@ -35,11 +37,11 @@ export default function DashboardLayout({
   const fetchFavoritos = useFavoritosStore((s) => s.fetchFavoritos);
   const fetchLikes = useLikedClasesStore((s) => s.fetchLikes);
   const fetchLikesComentarioClases = useLikeComentarioClaseStore(
-    (s) => s.fetchLikes
+    (s) => s.fetchLikes,
   );
   const fetchLikesForos = useLikedForoStore((s) => s.fetchLikes);
   const fetchLikesComentarioForos = useLikeComentarioForoStore(
-    (s) => s.fetchLikes
+    (s) => s.fetchLikes,
   );
   const setPerfil = usePerfilStore((state) => state.setPerfil);
 
@@ -59,6 +61,7 @@ export default function DashboardLayout({
     fetchLikesComentarioClases();
     fetchLikesForos();
     fetchLikesComentarioForos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     fetchLikes,
     fetchLikesComentarioClases,
@@ -73,9 +76,14 @@ export default function DashboardLayout({
 
   return (
     <div className="w-screen h-screen flex flex-col">
-      {!suscripcion ? (
+      {/* 1ra Condición: Si está bloqueado, mostramos su modal */}
+      {perfil?.status === "bloqued" ? (
+        <UsuarioBloqueado />
+      ) : /* 2da Condición: Si NO tiene suscripción activa, mostramos el modal de vencida */
+      !suscripcion ? (
         <SuscripcionVencida />
       ) : (
+        /* 3ra Condición: Si todo está en orden, mostramos el Dashboard normal */
         <>
           <Header />
           <VideoPresentacion

@@ -9,7 +9,7 @@ export type User = {
   zona_horaria?: string | null;
   dni_id_ce: string | null;
   reset_password: string;
-  status: "active" | "disabled";
+  status: "active" | "disabled" | "bloqued";
   emailVerified: boolean;
   videoPresentacion: boolean;
 };
