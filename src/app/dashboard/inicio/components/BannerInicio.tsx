@@ -12,31 +12,24 @@ import { useLanguageStore } from "@/stores/useLanguage.store";
 const TRANSLATIONS = {
   es: (
     <>
-      <strong>¡Bienvenido!</strong> Desde el momento en que te suscribes,
-      disfrutas de acceso{" "}
-      <strong>a contenido exclusivo, clases y recursos diseñados</strong> para
-      tus proyectos de Papelería Creativa y Personalizados. Recuerda que cada
-      recurso estará disponible por{" "}
       <strong>
-        30 días desde su publicación. Una vez caducado, no habrá opción a
-        reclamos,
-      </strong>{" "}
-      así que no olvides{" "}
-      <strong>descargarlo a tiempo y aprovecharlo al máximo.</strong>
+        Bienvenido a Team Crafter Web. Te recomendamos leer la sección de
+        Preguntas Frecuentes, donde encontrarás información importante sobre el
+        funcionamiento de la plataforma, descargas y suscripciones. Recuerda que
+        no habrá opción a reclamo por pérdida de archivos descargados o pérdida
+        de acceso por cancelación de suscripción.
+      </strong>
     </>
   ),
   en: (
     <>
-      <strong>Welcome!</strong> From the moment you subscribe, you get access to{" "}
-      <strong>exclusive content, classes, and resources</strong> designed for
-      your Creative and Personalized Stationery projects. Remember that each
-      resource will be available for{" "}
       <strong>
-        30 days after its publication. Once expired, there will be no option for
-        claims,
-      </strong>{" "}
-      so don’t forget to{" "}
-      <strong>download it in time and make the most of it.</strong>
+        Welcome to Team Crafter Web. We recommend reading the Frequently Asked
+        Questions section, where you will find important information about how
+        the platform, downloads, and subscriptions work. Please note that no
+        claims can be made for lost downloaded files or loss of access due to
+        subscription cancellation.
+      </strong>
     </>
   ),
 };
