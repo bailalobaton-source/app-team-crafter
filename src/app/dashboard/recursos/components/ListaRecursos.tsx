@@ -61,7 +61,7 @@ export default function ListaRecursos({ recursos }: Props) {
         className={cn(
           className,
           "relative  min-w-[40px] min-h-[40px] text-[#68E1E0] font-black text-xl flex items-center justify-center  cursor-pointer ",
-          isActive && "text-white "
+          isActive && "text-white ",
         )}
         onClick={() => setPage(value)}
       >
@@ -82,8 +82,9 @@ export default function ListaRecursos({ recursos }: Props) {
   return (
     <section className="w-full flex flex-col items-center gap-8 pt-10">
       <div className="w-full grid grid-cols-4 gap-[20px] max-2xl:grid-cols-3   max-md:grid-cols-2     max-sm:flex max-sm:flex-col max-sm:gap-[50px]">
-        {recursos.map((recurso, index) => (
-          <div className="w-full" key={index}>
+        {recursos.map((recurso) => (
+          <div className="w-full" key={recurso.id}>
+            {" "}
             <CardRecursos recurso={recurso} width="w-full" />
           </div>
         ))}

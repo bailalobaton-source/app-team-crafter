@@ -48,7 +48,7 @@ export default function CardRecursos({ recurso, width }: Props) {
     >
       <div className="group w-full relative rounded-2xl overflow-hidden">
         {recurso.tipos_ids.some(
-          (tipo) => tipo.tipo_recurso.nombre_es === "Exclusivos"
+          (tipo) => tipo.tipo_recurso.nombre_es === "Exclusivos",
         ) && (
           <Image
             className="absolute top-4 left-4 w-10 z-30"
@@ -131,7 +131,9 @@ export default function CardRecursos({ recurso, width }: Props) {
 
       {/* 🔽 Nombre del recurso */}
       <h3 className="text-medium font-semibold text-[#8A8A8A] uppercase">
-        {language === "es" ? recurso.nombre_recurso : recurso.nombre_recurso_en}{" "}
+        {language === "es"
+          ? recurso.nombre_recurso
+          : recurso.nombre_recurso_en}{" "}
       </h3>
 
       {/* 🔽 Modal cuando está caducado */}
